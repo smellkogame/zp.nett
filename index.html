@@ -1,21 +1,21 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Кринж-игра: ЗП НЕ ПОВЫШАЮТ</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Лесничество: ЗП НЕ ПОДНИМАЮТ</title>
   <style>
     :root{
-      --bg:#0b0f19;
-      --card:#121a2b;
-      --card2:#0f1524;
-      --text:#e8ecff;
-      --muted:#9aa6d6;
-      --accent:#7c5cff;
+      --bg:#08120f;
+      --card:#0e1f1a;
+      --card2:#0b1a15;
+      --text:#eafff6;
+      --muted:#9ad3c0;
+      --accent:#43d38a;
       --bad:#ff4d6d;
       --good:#35d07f;
       --warn:#ffc857;
-      --border:rgba(255,255,255,.08);
+      --border:rgba(255,255,255,.09);
       --shadow: 0 20px 60px rgba(0,0,0,.45);
     }
     *{box-sizing:border-box}
@@ -23,9 +23,9 @@
       margin:0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Noto Sans", Arial, sans-serif;
       background:
-        radial-gradient(1000px 600px at 20% 0%, rgba(124,92,255,.18), transparent 60%),
-        radial-gradient(800px 500px at 80% 20%, rgba(53,208,127,.14), transparent 55%),
-        radial-gradient(900px 650px at 50% 110%, rgba(255,77,109,.12), transparent 60%),
+        radial-gradient(1000px 600px at 15% 0%, rgba(67,211,138,.18), transparent 60%),
+        radial-gradient(900px 600px at 85% 15%, rgba(255,200,87,.12), transparent 55%),
+        radial-gradient(900px 700px at 50% 110%, rgba(255,77,109,.12), transparent 60%),
         var(--bg);
       color:var(--text);
       min-height:100vh;
@@ -35,14 +35,12 @@
       padding:22px;
     }
     .wrap{
-      width:min(1080px, 100%);
+      width:min(1180px, 100%);
       display:grid;
-      grid-template-columns: 1.2fr .8fr;
+      grid-template-columns: 1.25fr .75fr;
       gap:16px;
     }
-    @media (max-width: 900px){
-      .wrap{grid-template-columns: 1fr}
-    }
+    @media (max-width: 980px){ .wrap{grid-template-columns:1fr} }
     .card{
       background: linear-gradient(180deg, rgba(255,255,255,.06), transparent 35%), var(--card);
       border:1px solid var(--border);
@@ -58,19 +56,9 @@
       justify-content:space-between;
       gap:12px;
     }
-    .title{
-      display:flex; flex-direction:column; gap:4px;
-    }
-    h1{
-      margin:0;
-      font-size:18px;
-      letter-spacing:.2px;
-    }
-    .sub{
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.25;
-    }
+    .title{display:flex; flex-direction:column; gap:4px}
+    h1{margin:0; font-size:18px; letter-spacing:.2px}
+    .sub{color:var(--muted); font-size:13px; line-height:1.25}
     .pill{
       border:1px solid var(--border);
       background: rgba(255,255,255,.05);
@@ -80,20 +68,9 @@
       color:var(--muted);
       white-space:nowrap;
     }
-    .main{
-      padding:16px 18px 18px;
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:14px;
-    }
-    .grid2{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
-    }
-    @media (max-width: 520px){
-      .grid2{grid-template-columns:1fr}
-    }
+    .main{padding:16px 18px 18px; display:grid; gap:14px}
+    .grid2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+    @media (max-width: 560px){ .grid2{grid-template-columns:1fr} }
     .stat{
       background: linear-gradient(180deg, rgba(255,255,255,.04), transparent 40%), var(--card2);
       border:1px solid var(--border);
@@ -105,17 +82,9 @@
       min-height:84px;
     }
     .k{color:var(--muted); font-size:12px}
-    .v{font-size:18px; font-weight:750}
+    .v{font-size:18px; font-weight:800}
     .hint{font-size:12px; color:var(--muted); line-height:1.35}
-    .big{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:12px;
-      padding-top:2px;
-    }
-    .btnRow{
-      display:flex; flex-wrap:wrap; gap:10px;
-    }
+    .btnRow{display:flex; flex-wrap:wrap; gap:10px}
     button{
       appearance:none;
       border:1px solid var(--border);
@@ -124,24 +93,16 @@
       padding:10px 12px;
       border-radius:14px;
       cursor:pointer;
-      font-weight:650;
+      font-weight:700;
       transition: transform .06s ease, background .15s ease, border-color .15s ease;
       user-select:none;
     }
     button:hover{background: rgba(255,255,255,.09)}
     button:active{transform: translateY(1px) scale(.99)}
-    .primary{
-      background: rgba(124,92,255,.18);
-      border-color: rgba(124,92,255,.35);
-    }
-    .danger{
-      background: rgba(255,77,109,.14);
-      border-color: rgba(255,77,109,.35);
-    }
-    .good{
-      background: rgba(53,208,127,.12);
-      border-color: rgba(53,208,127,.35);
-    }
+    button:disabled{opacity:.5; cursor:not-allowed}
+    .primary{background: rgba(67,211,138,.16); border-color: rgba(67,211,138,.35)}
+    .danger{background: rgba(255,77,109,.14); border-color: rgba(255,77,109,.35)}
+    .warnBtn{background: rgba(255,200,87,.12); border-color: rgba(255,200,87,.35)}
     .ghost{background: rgba(255,255,255,.04)}
     .log{
       background: radial-gradient(600px 260px at 30% 0%, rgba(255,200,87,.07), transparent 55%), var(--card2);
@@ -165,42 +126,13 @@
       color:var(--muted);
       background: rgba(255,255,255,.04);
     }
-    .tag.bad{color: #ffd1d9; border-color: rgba(255,77,109,.35); background: rgba(255,77,109,.08)}
-    .tag.good{color: #c9ffe2; border-color: rgba(53,208,127,.35); background: rgba(53,208,127,.08)}
-    .tag.warn{color: #fff0c2; border-color: rgba(255,200,87,.35); background: rgba(255,200,87,.08)}
-    .side{
-      display:flex;
-      flex-direction:column;
-      gap:16px;
-    }
-    .shopItem{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:12px;
-      padding:10px;
-      border-radius:14px;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.04);
-    }
-    .shopItem b{display:block; font-size:13px}
-    .shopItem span{display:block; font-size:12px; color:var(--muted); margin-top:2px; line-height:1.25}
-    .mini{
-      font-size:12px; color:var(--muted)
-    }
-    .meter{
-      height:10px;
-      border-radius:999px;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.04);
-      overflow:hidden;
-    }
-    .bar{
-      height:100%;
-      width:0%;
-      background: linear-gradient(90deg, rgba(124,92,255,.75), rgba(53,208,127,.75));
-      transition: width .25s ease;
-    }
+    .tag.bad{color:#ffd1d9; border-color: rgba(255,77,109,.35); background: rgba(255,77,109,.08)}
+    .tag.good{color:#c9ffe2; border-color: rgba(53,208,127,.35); background: rgba(53,208,127,.08)}
+    .tag.warn{color:#fff0c2; border-color: rgba(255,200,87,.35); background: rgba(255,200,87,.08)}
+    .tag.info{color:#d9ffeF; border-color: rgba(67,211,138,.25); background: rgba(67,211,138,.06)}
+
+    .meter{height:10px; border-radius:999px; border:1px solid var(--border); background: rgba(255,255,255,.04); overflow:hidden}
+    .bar{height:100%; width:0%; background: linear-gradient(90deg, rgba(67,211,138,.75), rgba(255,200,87,.75)); transition: width .25s ease}
     .footer{
       padding:12px 18px 16px;
       border-top:1px solid var(--border);
@@ -211,166 +143,202 @@
       color:var(--muted);
       font-size:12px;
     }
+    .side{display:flex; flex-direction:column; gap:16px}
+    .shopItem{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
+      padding:10px; border-radius:14px; border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+    }
+    .shopItem b{display:block; font-size:13px}
+    .shopItem span{display:block; font-size:12px; color:var(--muted); margin-top:2px; line-height:1.25}
+    .mini{font-size:12px; color:var(--muted)}
     .kbd{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      padding:2px 6px;
-      border-radius:8px;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.05);
-      color:var(--text);
-      font-size:11px;
+      padding:2px 6px; border-radius:8px; border:1px solid var(--border);
+      background: rgba(255,255,255,.05); color:var(--text); font-size:11px;
     }
-    .blink{
-      animation: blink 1.1s infinite;
+    .blink{animation: blink 1.1s infinite}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:.55}}
+    .taskBox{
+      border:1px dashed rgba(255,255,255,.16);
+      border-radius:16px;
+      padding:12px;
+      background: rgba(255,255,255,.03);
+      display:grid;
+      gap:10px;
     }
-    @keyframes blink{
-      0%,100%{opacity:1}
-      50%{opacity:.55}
+    .taskTitle{display:flex; justify-content:space-between; gap:10px; align-items:center}
+    .taskTitle b{font-size:13px}
+    .progressOuter{
+      height:12px; border-radius:999px; border:1px solid var(--border);
+      background: rgba(255,255,255,.04); overflow:hidden;
+    }
+    .progressInner{
+      height:100%;
+      width:0%;
+      background: linear-gradient(90deg, rgba(255,77,109,.65), rgba(255,200,87,.65), rgba(67,211,138,.65));
+      transition: width .2s linear;
+    }
+    .smallRow{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px; border-radius:999px; border:1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color:var(--muted); font-size:12px;
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <!-- LEFT / GAME -->
     <section class="card">
       <header>
         <div class="title">
-          <h1>💼 «ЗП НЕ ПОВЫШАЮТ» — кринж-симулятор просьбы о повышении</h1>
-          <div class="sub">Твоя цель: дожить до конца месяца, не сгореть, не уволиться и накопить <b>уважение</b> (которое нельзя обменять на деньги).</div>
+          <h1>🌲 Лесничество: «ЗП НЕ ПОДНИМАЮТ» (кринж-сим)</h1>
+          <div class="sub">Служба: патрули, термоточки, акты, проверки. Награда: «спасибо» и ещё одна бумага.</div>
         </div>
-        <div class="pill">Режим: «ну вы держитесь»</div>
+        <div class="pill">Сезон: <span class="blink">пожароопасный</span></div>
       </header>
 
       <div class="main">
         <div class="grid2">
           <div class="stat">
-            <div class="k">Баланс «на руки»</div>
+            <div class="k">Зарплата «на руки» (баланс)</div>
             <div class="v"><span id="money">68000</span> ₽</div>
-            <div class="hint">Деньги тают быстрее, чем обещания.</div>
+            <div class="hint">Утекает на ГСМ, еду и «мелочи».</div>
           </div>
           <div class="stat">
-            <div class="k">Инфляция</div>
-            <div class="v"><span id="inflation">1.00</span>×</div>
-            <div class="hint">Чем выше, тем больнее смотреть на ценники.</div>
+            <div class="k">Нагрузка</div>
+            <div class="v"><span id="load">1.00</span>×</div>
+            <div class="hint">Чем выше — тем больше термоточек и бумажек.</div>
           </div>
           <div class="stat">
             <div class="k">Мораль</div>
             <div class="v"><span id="morale">75</span>/100</div>
-            <div class="meter" title="Мораль">
-              <div id="moraleBar" class="bar"></div>
-            </div>
+            <div class="meter"><div id="moraleBar" class="bar"></div></div>
           </div>
           <div class="stat">
-            <div class="k">Уровень «кринжа»</div>
+            <div class="k">Кринж от руководства</div>
             <div class="v"><span id="cringe">12</span>/100</div>
-            <div class="meter" title="Кринж">
-              <div id="cringeBar" class="bar"></div>
-            </div>
+            <div class="meter"><div id="cringeBar" class="bar"></div></div>
           </div>
         </div>
 
-        <div class="big">
-          <div class="btnRow">
-            <button class="primary" id="askRaise">🙏 Попросить повышение</button>
-            <button class="ghost" id="workHard">🧠 Работать усерднее</button>
-            <button class="ghost" id="sendMeme">📎 Скинуть мем в чат отдела</button>
-            <button class="danger" id="rageQuit">🔥 «Да пошло оно»</button>
-          </div>
+        <div class="smallRow">
+          <div class="badge">🔥 Термоточек: <b id="fires">0</b></div>
+          <div class="badge">🦌 Браконьеры: <b id="poach">0</b></div>
+          <div class="badge">📄 Жалобы: <b id="complaints">0</b></div>
+          <div class="badge">⭐ Репутация: <b id="rep">50</b>/100</div>
+        </div>
 
-          <div class="log" id="log" aria-live="polite"></div>
+        <div class="btnRow">
+          <button class="primary" id="patrol">🚙 Патруль</button>
+          <button class="warnBtn" id="writeAct">🧾 Написать акт</button>
+          <button class="primary" id="closeFire">🧯 Закрыть термоточку (60 сек)</button>
+          <button class="ghost" id="callWeekend">☎️ Вызвать людей в выходной</button>
+          <button class="danger" id="askRaise">🙏 Попросить повышение</button>
+        </div>
 
-          <div class="btnRow">
-            <button class="good" id="endDay">🌙 Завершить день</button>
-            <button class="ghost" id="reset">🔁 Новая жизнь</button>
-            <button class="ghost" id="mute">🔊 Звук: ВКЛ</button>
+        <div class="taskBox">
+          <div class="taskTitle">
+            <b>⏳ Текущая задача</b>
+            <span class="mini">Подсказки: <span class="kbd">Space</span> — завершить день • <span class="kbd">R</span> — попросить повышение</span>
           </div>
-          <div class="hint">
-            Подсказка: <span class="kbd">Space</span> — завершить день, <span class="kbd">R</span> — попросить повышение.
-          </div>
+          <div class="mini" id="taskText">Ничего не делается. Идеальный момент для нового поручения.</div>
+          <div class="progressOuter"><div id="taskProg" class="progressInner"></div></div>
+        </div>
+
+        <div class="log" id="log" aria-live="polite"></div>
+
+        <div class="btnRow">
+          <button class="good" id="endDay">🌙 Завершить день</button>
+          <button class="ghost" id="reset">🔁 Новый месяц</button>
+          <button class="ghost" id="mute">🔊 Звук: ВКЛ</button>
+        </div>
+
+        <div class="hint">
+          Условия победы: дожить до дня 30 с моралью ≥ 40, жалобами ≤ 5 и кринжем ≤ 70.
+          Легендарный вин: выбить повышение (шанс низкий, как индексировать оклад).
         </div>
       </div>
 
       <div class="footer">
-        <div>День: <b id="day">1</b> / 30 • Сезон: <span class="blink">«оптимизация»</span></div>
+        <div>День: <b id="day">1</b> / 30 • Режим: <span class="blink">«бумага любит всё»</span></div>
         <div>Достижения: <b id="ach">0</b></div>
       </div>
     </section>
 
-    <!-- RIGHT / SHOP + INFO -->
     <aside class="side">
       <section class="card">
         <header>
           <div class="title">
-            <h1>🛒 Магазин выживания</h1>
-            <div class="sub">Покупай апгрейды, чтобы дотянуть до следующего «мы вернёмся к этому вопросу».</div>
+            <h1>🛒 Склад выживания</h1>
+            <div class="sub">Покупай «апгрейды», чтобы гасить пожары и кринж.</div>
           </div>
-          <div class="pill">Платишь: болью</div>
+          <div class="pill">Оплата: рубли</div>
         </header>
         <div class="main">
           <div class="shopItem">
             <div>
-              <b>☕ Кофе “на кредите”</b>
-              <span>+10 морали сейчас, +5 кринжа (трясёт).</span>
-              <span class="mini">Цена: 450 ₽</span>
+              <b>⛽ Канистра “на всякий”</b>
+              <span>-0.05 к росту нагрузки на 5 дней.</span>
+              <span class="mini">Цена: 1500 ₽</span>
             </div>
-            <button id="buyCoffee">Купить</button>
+            <button id="buyFuel">Купить</button>
           </div>
 
           <div class="shopItem">
             <div>
-              <b>🧾 Таблица “учёт расходов”</b>
-              <span>Инфляция растёт медленнее 3 дня.</span>
-              <span class="mini">Цена: 1200 ₽</span>
+              <b>📻 Рация “чтоб не искать людей”</b>
+              <span>Патруль чаще даёт успех (+репутация).</span>
+              <span class="mini">Цена: 2200 ₽</span>
             </div>
-            <button id="buyBudget">Купить</button>
+            <button id="buyRadio">Купить</button>
           </div>
 
           <div class="shopItem">
             <div>
-              <b>🧘 Медитация “я не в ресурсе”</b>
-              <span>-15 кринжа, +5 морали.</span>
-              <span class="mini">Цена: 800 ₽</span>
+              <b>🧘 Полевой дзен</b>
+              <span>-15 кринжа, +6 морали.</span>
+              <span class="mini">Цена: 900 ₽</span>
             </div>
             <button id="buyZen">Купить</button>
           </div>
 
           <div class="shopItem">
             <div>
-              <b>📚 Курс “Как просить повышение и не умереть”</b>
-              <span>Шанс успеха просьбы +8% (но начальник тоже учится).</span>
-              <span class="mini">Цена: 2400 ₽</span>
+              <b>📚 Папка “акты без ошибок”</b>
+              <span>Акты пишутся быстрее (меньше жалоб).</span>
+              <span class="mini">Цена: 1800 ₽</span>
             </div>
-            <button id="buyCourse">Купить</button>
+            <button id="buyFolder">Купить</button>
           </div>
 
           <div class="shopItem">
             <div>
-              <b>🧊 “Холодное лицо”</b>
-              <span>Мораль не падает ниже 25 (1 раз за игру).</span>
-              <span class="mini">Цена: 3000 ₽</span>
+              <b>🧊 “Лицо инспектора”</b>
+              <span>Один раз спасает от проверки (жалобы не растут).</span>
+              <span class="mini">Цена: 3200 ₽</span>
             </div>
             <button id="buyFace">Купить</button>
           </div>
 
-          <div class="hint">
-            Совет бухгалтера: «денег нет, но вы держитесь» — это не проводка.
-          </div>
+          <div class="hint">Лесной закон суров, но бухгалтерия суровее.</div>
         </div>
       </section>
 
       <section class="card">
         <header>
           <div class="title">
-            <h1>📌 Как выиграть</h1>
-            <div class="sub">Выигрыш — это иллюзия, но пусть будет.</div>
+            <h1>📌 Лор (кринж)</h1>
+            <div class="sub">Начальник всегда “в курсе”.</div>
           </div>
-          <div class="pill">Спойлер: боль</div>
+          <div class="pill">мемы</div>
         </header>
         <div class="main">
-          <div class="hint">
-            ✅ Доживи до дня 30 с моралью ≥ 40 и кринжем ≤ 70.<br/>
-            ✅ Или получи повышение (да, это возможно).<br/><br/>
-            Провал: мораль ≤ 0 или кринж = 100 → тебя переводят в отдел «прочее».
+          <div class="hint" id="lore">
+            🔸 “Оклад поднять нельзя, но отчёт переписать можно.”<br/>
+            🔸 “Термоточка — это не пожар, это ‘событие’.”<br/>
+            🔸 “Проверка — это когда тебя спрашивают то, что сами не знают.”
           </div>
         </div>
       </section>
@@ -381,90 +349,91 @@
 (() => {
   // ----- STATE -----
   let day = 1;
+
+  // "баланс" как на руки
   let money = 68000;
-  let inflation = 1.00;
+
+  // нагрузка (аналог инфляции в прошлой версии)
+  let load = 1.00;
+
   let morale = 75;
   let cringe = 12;
 
-  let askSkill = 0; // from course
-  let inflationShieldDays = 0;
-  let faceUsed = false;
+  let fires = 0;        // термоточки
+  let poach = 0;        // браконьеры
+  let complaints = 0;   // жалобы/наезды
+  let rep = 50;         // репутация
+
   let achievements = 0;
   let muted = false;
 
-  const excuses = [
-    "Сейчас не время, давай после квартала.",
-    "У нас оптимизация, но ты держись.",
-    "Мы все тут ради идеи. Идея — бесценна.",
+  // upgrades
+  let loadShieldDays = 0;
+  let hasRadio = false;
+  let hasFolder = false;
+  let hasInspectorFace = false;
+  let faceUsed = false;
+
+  // task system
+  let task = { active:false, name:"", seconds:0, left:0, kind:"" };
+  let taskTimer = null;
+
+  const excuseBoss = [
+    "Сейчас не время, пожароопасный сезон.",
+    "Давай после проверки… какой — не уточняли.",
+    "Бюджет заморожен, но ты держись.",
     "Повышение? Конечно. В смысле — ответственности.",
-    "Бюджет заморожен. Как и премии. Как и надежда.",
-    "Ты и так молодец, вот тебе +1 задача.",
-    "Руководство в курсе, но у них совещание до 2037.",
-    "Давай посмотрим по результатам… каких — не уточняли.",
-    "А ты пробовал улыбаться шире? Это мотивирует.",
-    "ЗП не повышаем, зато у нас дружный коллектив (иногда)."
+    "Мы вернёмся к этому вопросу после отчёта. После какого — угадай.",
+    "Надо потерпеть, зато у нас миссия.",
+    "Республика в курсе. Курс — на оптимизацию."
   ];
 
-  const memes = [
-    "Скинул мем: «Моя мотивация» → *пустота*",
-    "Скинул мем про зарплату → HR поставил 👀",
-    "Скинул мем → начальник ответил: «в работе»",
-    "Скинул мем → коллеги отреагировали тишиной (символично)."
-  ];
-
-  const events = [
-    { t:"Цены на продукты выросли. Опять.", dM:-800, dInf:+0.03, dMor:-4, dCr:+3, tag:"warn" },
-    { t:"Тебя похвалили. Словами. Бесплатно.", dM:0, dInf:+0.01, dMor:+6, dCr:+2, tag:"good" },
-    { t:"Срочно надо «на вчера».", dM:0, dInf:+0.02, dMor:-7, dCr:+6, tag:"bad" },
-    { t:"Коллега уволился, его задачи «временно» твои.", dM:0, dInf:+0.01, dMor:-6, dCr:+5, tag:"bad" },
-    { t:"Пятница. В чате шутки про МРОТ.", dM:0, dInf:+0.02, dMor:+2, dCr:+4, tag:"warn" },
-    { t:"Ты нашёл 200₽ в кармане. Богатство!", dM:+200, dInf:+0.00, dMor:+3, dCr:+1, tag:"good" },
+  const dayEvents = [
+    { tag:"warn", t:"Поступила термоточка. На карте выглядит маленькой, в жизни — ‘ну так’.", d:{fires:+1, morale:-3, rep:-1} },
+    { tag:"bad",  t:"Браконьеры ‘просто ехали’ и ‘ничего не делали’.", d:{poach:+1, morale:-4, complaints:+1, rep:-2} },
+    { tag:"warn", t:"Вызвали на совещание: ‘почему мало отчётов и много термоточек’.", d:{cringe:+6, morale:-2} },
+    { tag:"good", t:"Коллега помог закрыть участок. Бывает же.", d:{morale:+5, rep:+2} },
+    { tag:"warn", t:"Техника капризничает. ГСМ улетает.", d:{money:-900, morale:-2} },
+    { tag:"good", t:"Нашёл нормальный маршрут патруля — меньше пустых кругов.", d:{rep:+2, morale:+2} },
+    { tag:"bad",  t:"Прилетела жалоба: ‘лес не так стоит’.", d:{complaints:+1, cringe:+4, morale:-3} },
   ];
 
   // ----- UI -----
-  const el = (id) => document.getElementById(id);
+  const el = id => document.getElementById(id);
   const ui = {
     money: el("money"),
-    inflation: el("inflation"),
+    load: el("load"),
     morale: el("morale"),
     cringe: el("cringe"),
     moraleBar: el("moraleBar"),
     cringeBar: el("cringeBar"),
     day: el("day"),
+    fires: el("fires"),
+    poach: el("poach"),
+    complaints: el("complaints"),
+    rep: el("rep"),
     log: el("log"),
     ach: el("ach"),
     mute: el("mute"),
+    taskText: el("taskText"),
+    taskProg: el("taskProg"),
   };
 
-  function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
+  function clamp(n,a,b){ return Math.max(a, Math.min(b, n)); }
   function fmt(n){ return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "); }
 
   function logLine(tag, text){
     const p = document.createElement("p");
     const s = document.createElement("span");
-    s.className = "tag " + (tag||"");
-    s.textContent = tag === "good" ? "успех" : tag === "bad" ? "кринж" : tag === "warn" ? "рынок" : "инфо";
+    s.className = "tag " + (tag||"info");
+    s.textContent = tag==="good" ? "успех" : tag==="bad" ? "жесть" : tag==="warn" ? "сезон" : "инфо";
     p.appendChild(s);
     p.appendChild(document.createTextNode(text));
     ui.log.appendChild(p);
     ui.log.scrollTop = ui.log.scrollHeight;
   }
 
-  function update(){
-    ui.money.textContent = fmt(money);
-    ui.inflation.textContent = inflation.toFixed(2);
-    ui.morale.textContent = Math.round(morale);
-    ui.cringe.textContent = Math.round(cringe);
-    ui.day.textContent = day;
-    ui.ach.textContent = achievements;
-
-    ui.moraleBar.style.width = clamp(morale,0,100) + "%";
-    ui.cringeBar.style.width = clamp(cringe,0,100) + "%";
-
-    // color shift via gradient width is enough; no explicit colors requested.
-  }
-
-  // ----- SOUND (tiny) -----
+  // ----- SOUND -----
   let audioCtx;
   function beep(freq=440, dur=0.06, type="sine", gain=0.04){
     if(muted) return;
@@ -472,34 +441,44 @@
       audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
       const o = audioCtx.createOscillator();
       const g = audioCtx.createGain();
-      o.type = type;
-      o.frequency.value = freq;
-      g.gain.value = gain;
+      o.type = type; o.frequency.value = freq; g.gain.value = gain;
       o.connect(g); g.connect(audioCtx.destination);
-      o.start();
-      o.stop(audioCtx.currentTime + dur);
-    } catch(e){}
+      o.start(); o.stop(audioCtx.currentTime + dur);
+    }catch(e){}
   }
 
-  // ----- GAME LOGIC -----
-  function dailyCost(){
-    // Кринжовая "стоимость жизни": растет с инфляцией и чуть-чуть с кринжем.
-    const base = 850 + (cringe * 6);
-    return Math.round(base * inflation);
+  function update(){
+    ui.money.textContent = fmt(money);
+    ui.load.textContent = load.toFixed(2);
+    ui.morale.textContent = Math.round(morale);
+    ui.cringe.textContent = Math.round(cringe);
+    ui.day.textContent = day;
+    ui.fires.textContent = fires;
+    ui.poach.textContent = poach;
+    ui.complaints.textContent = complaints;
+    ui.rep.textContent = rep;
+    ui.ach.textContent = achievements;
+
+    ui.moraleBar.style.width = clamp(morale,0,100) + "%";
+    ui.cringeBar.style.width = clamp(cringe,0,100) + "%";
+
+    // task UI
+    if(!task.active){
+      ui.taskText.textContent = "Ничего не делается. Идеальный момент для нового поручения.";
+      ui.taskProg.style.width = "0%";
+    }
   }
 
-  function checkAchievements(){
-    // 1) survive 7 days
-    if(day === 7) { achievements++; logLine("good","Достижение: «Неделя выживания». Ты всё ещё здесь."); beep(660,0.08,"triangle"); }
-    // 2) cringe low
-    if(cringe <= 5 && day >= 5) { achievements++; logLine("good","Достижение: «Кринж-диета». Редкий зверь."); beep(720,0.08,"triangle"); }
-    // 3) morale high
-    if(morale >= 95) { achievements++; logLine("good","Достижение: «В ресурсе» (подозрительно)."); beep(780,0.08,"triangle"); }
+  function disableAll(v){
+    ["patrol","writeAct","closeFire","callWeekend","askRaise","endDay",
+     "buyFuel","buyRadio","buyZen","buyFolder","buyFace"].forEach(id => {
+      const b = el(id); if(b) b.disabled = v;
+    });
   }
 
   function gameOver(reason){
     logLine("bad", reason);
-    logLine("warn", "Игра окончена. Нажми «Новая жизнь» и попробуй снова (или не пробуй, это тоже стратегия).");
+    logLine("warn","Игра окончена. Нажми «Новый месяц» и начни снова (или уйди в лес — по-настоящему).");
     disableAll(true);
     beep(180,0.12,"sawtooth",0.05);
     beep(120,0.14,"sawtooth",0.05);
@@ -507,200 +486,324 @@
 
   function win(reason){
     logLine("good", reason);
-    logLine("good", "Победа! Ты доказал(а), что чудеса случаются (или это баг).");
+    logLine("good","Победа. Ты выжил(а) и не превратился(лась) в бумагу.");
     disableAll(true);
-    beep(880,0.08,"square",0.05);
-    beep(990,0.10,"square",0.05);
+    beep(880,0.08,"triangle",0.06);
+    beep(990,0.10,"triangle",0.06);
   }
 
-  function disableAll(v){
-    ["askRaise","workHard","sendMeme","rageQuit","endDay","buyCoffee","buyBudget","buyZen","buyCourse","buyFace"]
-      .forEach(id => { const b = el(id); if(b) b.disabled = v; });
+  function applyDelta(d){
+    if(!d) return;
+    if(d.money) money += d.money;
+    if(d.load) load = Math.max(1.00, load + d.load);
+    if(d.morale) morale += d.morale;
+    if(d.cringe) cringe += d.cringe;
+    if(d.fires) fires = Math.max(0, fires + d.fires);
+    if(d.poach) poach = Math.max(0, poach + d.poach);
+    if(d.complaints) complaints = Math.max(0, complaints + d.complaints);
+    if(d.rep) rep = clamp(rep + d.rep, 0, 100);
+
+    morale = clamp(morale,0,100);
+    cringe = clamp(cringe,0,100);
   }
 
-  function askForRaise(){
-    // success chance tiny, increases with skill, decreases with cringe and high inflation
-    const base = 0.06 + (askSkill * 0.08); // up to +8% from course
-    const penalty = (cringe/300) + (inflation-1)*0.25;
-    const chance = clamp(base - penalty, 0.01, 0.22);
+  // ----- TASKS (60s progress for "close fire") -----
+  function startTask(name, seconds, kind){
+    if(task.active){
+      logLine("warn","Сначала закончи текущую задачу. Бумага не резиновая.");
+      beep(240,0.06,"sine");
+      return false;
+    }
+    task = {active:true, name, seconds, left:seconds, kind};
+    ui.taskText.textContent = `Задача: ${name} (осталось ${task.left} сек)`;
+    ui.taskProg.style.width = "0%";
+    const total = seconds;
+
+    taskTimer = setInterval(() => {
+      task.left--;
+      const done = total - task.left;
+      const pct = clamp((done/total)*100, 0, 100);
+      ui.taskProg.style.width = pct.toFixed(1) + "%";
+      ui.taskText.textContent = `Задача: ${name} (осталось ${task.left} сек)`;
+
+      if(task.left <= 0){
+        clearInterval(taskTimer); taskTimer = null;
+        finishTask();
+      }
+    }, 1000);
+
+    beep(520,0.05,"triangle",0.05);
+    return true;
+  }
+
+  function finishTask(){
+    if(!task.active) return;
+    const kind = task.kind;
+    task.active = false;
+
+    if(kind === "closeFire"){
+      if(fires > 0){
+        fires -= 1;
+        rep = clamp(rep + 4, 0, 100);
+        morale = clamp(morale + 3, 0, 100);
+        logLine("good","Термоточка закрыта. На карте стало на одну красную точку меньше. Душе тоже легче.");
+        beep(740,0.06,"triangle",0.06);
+      } else {
+        logLine("warn","Ты героически закрывал термоточку… которой уже не было. Кринж.");
+        cringe = clamp(cringe + 6, 0, 100);
+        beep(200,0.08,"sawtooth",0.05);
+      }
+    }
+
+    if(kind === "act"){
+      // writing acts reduces complaints chance and helps with inspections
+      rep = clamp(rep + 2, 0, 100);
+      morale = clamp(morale + 1, 0, 100);
+      if(complaints > 0 && Math.random() < (hasFolder ? 0.65 : 0.45)){
+        complaints -= 1;
+        logLine("good","Акт принят. Минус одна жалоба, плюс одна подпись.");
+        beep(720,0.06,"triangle",0.05);
+      } else {
+        logLine("info","Акт написан. Бумага стала толще. Жизнь — нет.");
+        beep(520,0.05,"sine",0.04);
+      }
+    }
+
+    update();
+    if(cringe >= 100) gameOver("Кринж достиг 100. Тебя назначили ответ. за ‘улучшение процессов’.");
+    if(morale <= 0) gameOver("Мораль закончилась. Ты ушёл в тайгу и растворился в тумане.");
+  }
+
+  // ----- ACTIONS -----
+  function patrol(){
+    // Patrol can reduce fires/poach chance or raise rep; costs money (fuel).
+    const fuelCost = Math.round((650 + Math.random()*300) * load);
+    money -= fuelCost;
+    morale -= 1.5;
+    logLine("info", `Патруль. Минус ${fmt(fuelCost)} ₽ на ГСМ. Ветер в лицо, отчёт в спину.`);
+
+    let successChance = 0.45 + (hasRadio ? 0.12 : 0) - (load-1)*0.08;
+    successChance = clamp(successChance, 0.15, 0.75);
+
+    const roll = Math.random();
+    if(roll < successChance){
+      // good find
+      if(Math.random() < 0.5 && fires > 0){
+        fires -= 1;
+        rep += 3; morale += 2;
+        logLine("good","Нашёл и локализовал термоточку раньше, чем она стала ‘событием’. Минус 1 термоточка.");
+      } else if(poach > 0){
+        poach -= 1;
+        rep += 4; morale += 1;
+        logLine("good","Поймал браконьеров на горячем (почти). Минус 1 браконьерская история.");
+      } else {
+        rep += 3; morale += 2;
+        logLine("good","Патруль без ЧП. Это редкость. Репутация растёт.");
+      }
+      beep(720,0.06,"triangle",0.06);
+    } else {
+      // bad outcome
+      cringe += 3; morale -= 2;
+      if(Math.random() < 0.6) { fires += 1; logLine("warn","Пока ты ехал — появилась новая термоточка. Лол."); }
+      else { complaints += 1; logLine("bad","Кто-то снял видео ‘почему вы не там’. Жалоба +1."); }
+      beep(180,0.08,"sawtooth",0.05);
+    }
+
+    morale = clamp(morale,0,100);
+    cringe = clamp(cringe,0,100);
+    rep = clamp(rep,0,100);
+    update();
+
+    if(money < 0) gameOver("Деньги ушли в минус. Ты стал ‘волонтёром леса’.");
+  }
+
+  function writeAct(){
+    const secs = hasFolder ? 35 : 60;
+    startTask("Пишем акт (бумага любит всё)", secs, "act");
+  }
+
+  function closeFire(){
+    if(fires <= 0){
+      logLine("warn","Термоточек нет. Но ты можешь создать одну отчётом (шутка).");
+      beep(240,0.06,"sine");
+      return;
+    }
+    startTask("Закрываем термоточку (прогресс 60 сек)", 60, "closeFire");
+  }
+
+  function callWeekend(){
+    // Helps reduce load a bit but increases cringe; costs money sometimes.
+    const cost = 900 + Math.random()*900;
+    money -= Math.round(cost);
+    load = Math.max(1.00, load - 0.06);
+    cringe += 6;
+    morale += 2;
+    logLine("warn","Вызвал людей в выходной. Минус деньги, плюс кринж, но нагрузка чуть падает.");
+    beep(420,0.06,"square",0.05);
+    update();
+  }
+
+  function askRaise(){
+    // Chance depends on rep and complaints; low base. Higher load hurts.
+    const base = 0.04;
+    const repBoost = (rep/100)*0.10;     // up to +10%
+    const compPenalty = (complaints*0.03); // -3% each
+    const loadPenalty = (load-1)*0.12;
+    const cringePenalty = cringe/250;
+    let chance = base + repBoost - compPenalty - loadPenalty - cringePenalty;
+    chance = clamp(chance, 0.01, 0.20);
 
     const roll = Math.random();
     if(roll < chance){
-      // raise: increase money baseline, reduce cringe, morale up
-      const raise = Math.round(1800 + Math.random()*2200); // monthly equivalent
+      const raise = Math.round(1500 + Math.random()*2500);
       money += raise;
       morale += 10;
       cringe -= 8;
-      logLine("good", `СЛУЧИЛОСЬ НЕВОЗМОЖНОЕ: тебе подняли ЗП на +${fmt(raise)} ₽ (и добавили KPI «улыбка»).`);
       achievements++;
-      beep(880,0.09,"triangle",0.06);
-      beep(660,0.08,"triangle",0.05);
-      // win condition: any raise can end game, for comedy
-      win("Ты выбил повышение. Начальник проснулся и сразу пожалел. Но поздно.");
+      logLine("good", `ЛЕГЕНДАРНО: тебе подняли выплату на +${fmt(raise)} ₽. И добавили KPI ‘любить отчёты’.`);
+      beep(880,0.08,"triangle",0.06);
+      win("Ты выбил повышение. Поверить сложно, но бухгалтерия уже плачет.");
       return;
     }
-
-    // fail: excuses + cringe up
-    const ex = excuses[Math.floor(Math.random()*excuses.length)];
-    cringe += 7 + Math.random()*6;
+    const ex = excuseBoss[Math.floor(Math.random()*excuseBoss.length)];
+    cringe += 7 + Math.random()*5;
     morale -= 4 + Math.random()*5;
-
-    // sometimes "bonus" is extra task
+    logLine("warn", `Ты попросил повышение. Ответ: «${ex}»`);
     if(Math.random() < 0.35){
-      morale -= 4;
-      cringe += 4;
-      logLine("bad", `Ты попросил повышение. Ответ: «${ex}» + тебе накинули задачу «на 2 часа» (которая на 2 дня).`);
-      beep(220,0.07,"sawtooth");
-      beep(160,0.09,"sawtooth");
-    } else {
-      logLine("warn", `Ты попросил повышение. Ответ: «${ex}»`);
-      beep(260,0.07,"sine");
+      complaints += 1;
+      logLine("bad", "И бонусом: ‘а давай-ка ты ещё и отчёт за соседний участок’ (жалоба +1).");
     }
+    beep(200,0.08,"sawtooth",0.05);
     update();
-    if(cringe >= 100) gameOver("Кринж достиг 100. Ты автоматически стал «самозанятым в душе».");
-    if(morale <= 0) gameOver("Мораль ушла в отрицательные значения. Ты растворился в корпоративной культуре.");
+    if(cringe >= 100) gameOver("Кринж достиг 100. Тебя назначили ответственным за ‘мотивацию коллектива’.");
+    if(morale <= 0) gameOver("Мораль исчезла. Ты ушёл в лес и стал легендой.");
   }
 
-  function workHarder(){
-    // grind: small morale, small chance to lower inflation (illusion), cringe can rise
-    const luck = Math.random();
-    morale += 3 + Math.random()*4;
-    cringe += 2 + Math.random()*3;
+  // ----- DAY PROGRESSION -----
+  function dailyLivingCost(){
+    // Costs scale with load and complaints (нервы/штрафы/бумага)
+    const base = 900 + (complaints*120) + (fires*90);
+    return Math.round(base * load);
+  }
 
-    if(luck < 0.25){
-      inflation = Math.max(1.00, inflation - 0.02);
-      logLine("good","Ты поработал усерднее. Вдруг стало чуточку легче (на бумаге). Инфляция чуть притормозила.");
-      beep(520,0.07,"triangle");
-    } else {
-      logLine("warn","Ты поработал усерднее. Тебе сказали «спасибо». Денег не прибавилось (традиции).");
-      beep(420,0.06,"sine");
+  function randomDayEvent(){
+    // Probability scales with load
+    const picks = Math.random() < 0.82 ? 1 : 0;
+    if(!picks){
+      logLine("info","День прошёл тихо. Это подозрительно.");
+      return;
     }
-    update();
+    const ev = dayEvents[Math.floor(Math.random()*dayEvents.length)];
+    logLine(ev.tag, ev.t);
+    applyDelta(ev.d);
   }
 
-  function sendMeme(){
-    const m = memes[Math.floor(Math.random()*memes.length)];
-    // meme: can reduce morale drop, but increases cringe unpredictably
-    const r = Math.random();
-    if(r < 0.45){
-      morale += 6;
-      cringe += 3;
-      logLine("good", m + " — но стало чуть веселее.");
-      beep(740,0.06,"square");
-    } else if(r < 0.85){
-      morale += 2;
-      cringe += 6;
-      logLine("warn", m + " — и наступила пауза, в которой слышно HR.");
-      beep(300,0.06,"square");
-    } else {
-      morale -= 4;
-      cringe += 9;
-      logLine("bad", m + " — начальник написал: «созвон».");
-      beep(180,0.08,"sawtooth");
-    }
-    update();
-  }
-
-  function rageQuit(){
-    // dramatic exit, not a win
-    logLine("bad","Ты нажал «Да пошло оно». На выходе тебе выдали: печеньку и чувство вины.");
-    gameOver("Увольнение по статье «слишком честный». (Шутка. Но неприятно.)");
-  }
-
-  function randomEvent(){
-    const ev = events[Math.floor(Math.random()*events.length)];
-    // apply inflation shield
-    let dInf = ev.dInf;
-    if(inflationShieldDays > 0){
-      dInf = Math.max(0, dInf - 0.03);
-    }
-    money += ev.dM;
-    inflation = Math.max(1.00, inflation + dInf);
-    morale += ev.dMor;
-    cringe += ev.dCr;
-    logLine(ev.tag, ev.t + ` (расход/эффект: ${ev.dM===0?"—":(ev.dM>0?"+":"") + fmt(ev.dM)} ₽)`);
+  function inspectionChance(){
+    // If complaints high -> inspection likely
+    const p = clamp(0.06 + complaints*0.06 + (load-1)*0.08, 0.05, 0.55);
+    return p;
   }
 
   function endDay(){
-    // daily living cost
-    const cost = dailyCost();
+    // can't end while task active? allow, but penalize
+    if(task.active){
+      logLine("bad","Ты ушёл в конец дня с незакрытой задачей. Бумага тебя догонит.");
+      morale -= 6; cringe += 6;
+      // cancel task
+      clearInterval(taskTimer); taskTimer = null;
+      task.active = false;
+      ui.taskProg.style.width = "0%";
+    }
+
+    // expenses
+    const cost = dailyLivingCost();
     money -= cost;
 
-    // inflation naturally grows a bit unless shield
-    let infGrow = 0.01 + Math.random()*0.02;
-    if(inflationShieldDays > 0){
-      infGrow = Math.max(0, infGrow - 0.025);
-      inflationShieldDays--;
+    // load growth (season pressure)
+    let loadGrow = 0.015 + Math.random()*0.02;
+    if(loadShieldDays > 0){
+      loadGrow = Math.max(0, loadGrow - 0.04);
+      loadShieldDays--;
     }
-    inflation = Math.max(1.00, inflation + infGrow);
+    load = Math.max(1.00, load + loadGrow);
 
     // morale drift
-    morale -= 2.5 + (inflation-1)*2.2;
-    // cringe decays slowly if morale high
-    if(morale > 70) cringe -= 1.3;
+    morale -= 2.2 + (load-1)*2.0;
+    if(rep > 70) morale += 0.6;
+    if(complaints > 3) morale -= 1.5;
 
-    // random event sometimes
-    if(Math.random() < 0.75) randomEvent();
-    else logLine("info","День прошёл относительно тихо. Это подозрительно.");
+    // random event
+    randomDayEvent();
 
-    // clamp
-    morale = clamp(morale, 0, 100);
-    cringe = clamp(cringe, 0, 100);
+    // inspection
+    if(Math.random() < inspectionChance()){
+      if(hasInspectorFace && !faceUsed){
+        faceUsed = true;
+        hasInspectorFace = false;
+        rep += 3;
+        logLine("good","Проверка пришла. Ты включил «лицо инспектора». Они ушли довольные (пока).");
+        beep(720,0.06,"triangle",0.05);
+      } else {
+        complaints += 1;
+        cringe += 5;
+        morale -= 4;
+        logLine("bad","Проверка: ‘покажите акты’. Жалоба +1, кринж +5.");
+        beep(160,0.09,"sawtooth",0.05);
+      }
+    }
 
-    // salary day - twice: day 10 and 25 (cringe)
+    // new fires/poachers scale with load
+    const newF = Math.random() < clamp(0.18*load, 0.12, 0.55) ? 1 : 0;
+    const newP = Math.random() < clamp(0.12*load, 0.08, 0.45) ? 1 : 0;
+    fires += newF;
+    poach += newP;
+    if(newF) logLine("warn","Появилась новая термоточка. Карта стала краснее.");
+    if(newP) logLine("warn","Снова браконьеры. У них сезон всегда.");
+
+    // salary split (кринж-реализм)
     if(day === 10){
       const advance = 15680;
       money += advance;
-      logLine("good", `Пришёл аванс: +${fmt(advance)} ₽. Ты снова поверил в экономику.`);
+      logLine("good", `Пришёл аванс: +${fmt(advance)} ₽. Ты сказал: “живём”.`);
       beep(880,0.06,"triangle",0.06);
     }
     if(day === 25){
       const rest = 52770;
       money += rest;
-      logLine("good", `Пришла зарплата: +${fmt(rest)} ₽. Ты пообещал себе «не тратить», и сразу нарушил.`);
+      logLine("good", `Пришла зарплата: +${fmt(rest)} ₽. И сразу расходы на жизнь: “держись”.`);
       beep(990,0.06,"triangle",0.06);
     }
 
-    // money pressure adds cringe
-    if(money < 12000){
-      cringe += 8;
-      morale -= 6;
-      logLine("bad","Баланс опасно низкий. В голове появился голос: «а может, подработка?»");
-      beep(160,0.08,"sawtooth",0.05);
-    }
+    // clamp + checks
+    morale = clamp(morale,0,100);
+    cringe = clamp(cringe,0,100);
+    rep = clamp(rep,0,100);
+    load = clamp(load, 1.00, 3.00);
 
-    // special safety: cold face
-    if(!faceUsed && morale < 25 && hasColdFace){
-      morale = 25;
-      faceUsed = true;
-      hasColdFace = false;
-      logLine("good","Активировалось «Холодное лицо». Мораль не упала ниже 25 (один раз).");
-      beep(660,0.07,"triangle",0.06);
-    }
+    // achievements
+    if(day === 7){ achievements++; logLine("good","Достижение: «Неделя на участке». Ты ещё не бумага."); }
+    if(fires >= 5){ logLine("bad","На участке пожарно-бумажный апокалипсис. Снизь нагрузку!"); }
+    if(complaints === 0 && day >= 8){ achievements++; logLine("good","Достижение: «Без жалоб» (редкость)."); }
 
-    // advance day
     day++;
-    checkAchievements();
     update();
 
-    // win/lose checks
-    if(cringe >= 100) return gameOver("Кринж достиг 100. Тебя назначили «амбассадором корпоративных ценностей».");
-    if(morale <= 0) return gameOver("Мораль = 0. Ты ушёл в лес (и правильно).");
+    if(money < -2000) return gameOver("Баланс ушёл в минус. Ты теперь «инициативный лесной энтузиаст».");
+    if(cringe >= 100) return gameOver("Кринж = 100. Тебя назначили отвечать за ‘улучшение отчётности’.");
+    if(morale <= 0) return gameOver("Мораль = 0. Ты ушёл в лес и стал легендой.");
     if(day > 30){
-      if(morale >= 40 && cringe <= 70){
-        return win("Ты дожил до конца месяца. Это редкое достижение, поздравляю.");
+      if(morale >= 40 && cringe <= 70 && complaints <= 5){
+        return win("Ты дожил до конца месяца и не утонул в бумаге. Это победа.");
       } else {
-        return gameOver("Месяц закончился, но ты морально не вывез. Начальник сказал: «ну бывает».");
+        return gameOver("Месяц закончился. Ты выжил, но система победила. (как всегда)");
       }
     }
   }
 
   // ----- SHOP -----
-  let hasColdFace = false;
-
   function buy(cost, ok){
     if(money < cost){
-      logLine("bad", `Не хватает денег. Нужно ещё ${fmt(cost - money)} ₽. (да, иронично)`);
+      logLine("bad", `Не хватает денег: нужно ещё ${fmt(cost - money)} ₽.`);
       beep(200,0.07,"sawtooth");
       return false;
     }
@@ -711,60 +814,53 @@
     return true;
   }
 
-  el("buyCoffee").addEventListener("click", () => buy(450, () => {
-    morale = clamp(morale + 10, 0, 100);
-    cringe = clamp(cringe + 5, 0, 100);
-    logLine("warn","Кофе куплен. Сердце стучит как KPI. Мораль +10, кринж +5.");
+  el("buyFuel").addEventListener("click", () => buy(1500, () => {
+    loadShieldDays = Math.max(loadShieldDays, 5);
+    logLine("good","Канистра куплена. Нагрузка 5 дней растёт медленнее.");
   }));
 
-  el("buyBudget").addEventListener("click", () => buy(1200, () => {
-    inflationShieldDays = Math.max(inflationShieldDays, 3);
-    logLine("good","Ты завёл учёт расходов. Инфляция 3 дня растёт медленнее (как минимум в твоей голове).");
+  el("buyRadio").addEventListener("click", () => buy(2200, () => {
+    hasRadio = true;
+    logLine("good","Рация на связи. Патрули стали эффективнее.");
   }));
 
-  el("buyZen").addEventListener("click", () => buy(800, () => {
+  el("buyZen").addEventListener("click", () => buy(900, () => {
     cringe = clamp(cringe - 15, 0, 100);
-    morale = clamp(morale + 5, 0, 100);
-    logLine("good","Медитация: «я не в ресурсе». Кринж -15, мораль +5.");
+    morale = clamp(morale + 6, 0, 100);
+    logLine("good","Полевой дзен: кринж -15, мораль +6.");
   }));
 
-  el("buyCourse").addEventListener("click", () => buy(2400, () => {
-    if(askSkill < 1){
-      askSkill = 1;
-      logLine("good","Курс пройден. Теперь ты просишь повышение с заметно более уверенным видом (+8% шанс).");
-    } else {
-      logLine("warn","Ты купил курс второй раз. На третий дадут диплом «кринж-магистр». (эффект не стакается)");
-      cringe = clamp(cringe + 2, 0, 100);
-    }
+  el("buyFolder").addEventListener("click", () => buy(1800, () => {
+    hasFolder = true;
+    logLine("good","Папка для актов куплена. Задачи ‘Акт’ выполняются быстрее и лучше.");
   }));
 
-  el("buyFace").addEventListener("click", () => buy(3000, () => {
-    hasColdFace = true;
+  el("buyFace").addEventListener("click", () => buy(3200, () => {
+    hasInspectorFace = true;
     faceUsed = false;
-    logLine("good","Апгрейд «Холодное лицо» активен. Один раз спасёт мораль от падения ниже 25.");
+    logLine("good","«Лицо инспектора» готово. Один раз спасёт на проверке.");
   }));
 
   // ----- BUTTONS -----
-  el("askRaise").addEventListener("click", askForRaise);
-  el("workHard").addEventListener("click", workHarder);
-  el("sendMeme").addEventListener("click", sendMeme);
-  el("rageQuit").addEventListener("click", rageQuit);
+  el("patrol").addEventListener("click", patrol);
+  el("writeAct").addEventListener("click", writeAct);
+  el("closeFire").addEventListener("click", closeFire);
+  el("callWeekend").addEventListener("click", callWeekend);
+  el("askRaise").addEventListener("click", askRaise);
   el("endDay").addEventListener("click", endDay);
 
   el("reset").addEventListener("click", () => {
-    day = 1;
-    money = 68000;
-    inflation = 1.00;
-    morale = 75;
-    cringe = 12;
-    askSkill = 0;
-    inflationShieldDays = 0;
-    faceUsed = false;
-    hasColdFace = false;
+    day = 1; money = 68000; load = 1.00; morale = 75; cringe = 12;
+    fires = 0; poach = 0; complaints = 0; rep = 50;
     achievements = 0;
+    loadShieldDays = 0; hasRadio = false; hasFolder = false;
+    hasInspectorFace = false; faceUsed = false;
+    task = {active:false, name:"", seconds:0, left:0, kind:""};
+    if(taskTimer){ clearInterval(taskTimer); taskTimer = null; }
     ui.log.innerHTML = "";
     disableAll(false);
-    logLine("info","Новая жизнь. Новый ты. Те же цены. Те же отмазки.");
+    logLine("info","Новый месяц. Новые термоточки. Старый оклад.");
+    logLine("warn","Цель: выжить, закрывать термоточки и не утонуть в жалобах.");
     update();
     beep(520,0.06,"triangle");
   });
@@ -772,19 +868,18 @@
   el("mute").addEventListener("click", () => {
     muted = !muted;
     el("mute").textContent = muted ? "🔇 Звук: ВЫКЛ" : "🔊 Звук: ВКЛ";
-    logLine("info", muted ? "Звук выключен. Теперь кринж слышно сильнее." : "Звук включен. Теперь кринж ещё и звучит.");
+    logLine("info", muted ? "Звук выключен. Теперь слышно только ветер и отчёты." : "Звук включен. Теперь кринж ещё и звучит.");
     update();
   });
 
-  // keyboard
   window.addEventListener("keydown", (e) => {
     if(e.code === "Space"){ e.preventDefault(); if(!el("endDay").disabled) endDay(); }
-    if(e.key.toLowerCase() === "r"){ if(!el("askRaise").disabled) askForRaise(); }
+    if(e.key.toLowerCase() === "r"){ if(!el("askRaise").disabled) askRaise(); }
   });
 
   // init
-  logLine("info","Ты пришёл на работу. В почте 37 писем. В сердце 0% индексации.");
-  logLine("warn","Цель: дожить до конца месяца или выбить повышение (легендарное).");
+  logLine("info","Ты вышел на участок. Рации молчат. Карта пока чистая.");
+  logLine("warn","Сезон начинается. Оклад — нет.");
   update();
 })();
 </script>
