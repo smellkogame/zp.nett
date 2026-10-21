@@ -1,887 +1,2072 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Лесничество: ЗП НЕ ПОДНИМАЮТ</title>
-  <style>
-    :root{
-      --bg:#08120f;
-      --card:#0e1f1a;
-      --card2:#0b1a15;
-      --text:#eafff6;
-      --muted:#9ad3c0;
-      --accent:#43d38a;
-      --bad:#ff4d6d;
-      --good:#35d07f;
-      --warn:#ffc857;
-      --border:rgba(255,255,255,.09);
-      --shadow: 0 20px 60px rgba(0,0,0,.45);
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Noto Sans", Arial, sans-serif;
-      background:
-        radial-gradient(1000px 600px at 15% 0%, rgba(67,211,138,.18), transparent 60%),
-        radial-gradient(900px 600px at 85% 15%, rgba(255,200,87,.12), transparent 55%),
-        radial-gradient(900px 700px at 50% 110%, rgba(255,77,109,.12), transparent 60%),
-        var(--bg);
-      color:var(--text);
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:22px;
-    }
-    .wrap{
-      width:min(1180px, 100%);
-      display:grid;
-      grid-template-columns: 1.25fr .75fr;
-      gap:16px;
-    }
-    @media (max-width: 980px){ .wrap{grid-template-columns:1fr} }
-    .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.06), transparent 35%), var(--card);
-      border:1px solid var(--border);
-      border-radius:18px;
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-    header{
-      padding:16px 18px 10px;
-      border-bottom:1px solid var(--border);
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:12px;
-    }
-    .title{display:flex; flex-direction:column; gap:4px}
-    h1{margin:0; font-size:18px; letter-spacing:.2px}
-    .sub{color:var(--muted); font-size:13px; line-height:1.25}
-    .pill{
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.05);
-      padding:8px 10px;
-      border-radius:999px;
-      font-size:12px;
-      color:var(--muted);
-      white-space:nowrap;
-    }
-    .main{padding:16px 18px 18px; display:grid; gap:14px}
-    .grid2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
-    @media (max-width: 560px){ .grid2{grid-template-columns:1fr} }
-    .stat{
-      background: linear-gradient(180deg, rgba(255,255,255,.04), transparent 40%), var(--card2);
-      border:1px solid var(--border);
-      border-radius:16px;
-      padding:12px;
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-      min-height:84px;
-    }
-    .k{color:var(--muted); font-size:12px}
-    .v{font-size:18px; font-weight:800}
-    .hint{font-size:12px; color:var(--muted); line-height:1.35}
-    .btnRow{display:flex; flex-wrap:wrap; gap:10px}
-    button{
-      appearance:none;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.06);
-      color:var(--text);
-      padding:10px 12px;
-      border-radius:14px;
-      cursor:pointer;
-      font-weight:700;
-      transition: transform .06s ease, background .15s ease, border-color .15s ease;
-      user-select:none;
-    }
-    button:hover{background: rgba(255,255,255,.09)}
-    button:active{transform: translateY(1px) scale(.99)}
-    button:disabled{opacity:.5; cursor:not-allowed}
-    .primary{background: rgba(67,211,138,.16); border-color: rgba(67,211,138,.35)}
-    .danger{background: rgba(255,77,109,.14); border-color: rgba(255,77,109,.35)}
-    .warnBtn{background: rgba(255,200,87,.12); border-color: rgba(255,200,87,.35)}
-    .ghost{background: rgba(255,255,255,.04)}
-    .log{
-      background: radial-gradient(600px 260px at 30% 0%, rgba(255,200,87,.07), transparent 55%), var(--card2);
-      border:1px solid var(--border);
-      border-radius:16px;
-      padding:12px;
-      min-height:150px;
-      max-height:220px;
-      overflow:auto;
-      font-size:13px;
-      line-height:1.35;
-    }
-    .log p{margin:.35em 0}
-    .tag{
-      display:inline-block;
-      font-size:11px;
-      padding:2px 8px;
-      border-radius:999px;
-      border:1px solid var(--border);
-      margin-right:8px;
-      color:var(--muted);
-      background: rgba(255,255,255,.04);
-    }
-    .tag.bad{color:#ffd1d9; border-color: rgba(255,77,109,.35); background: rgba(255,77,109,.08)}
-    .tag.good{color:#c9ffe2; border-color: rgba(53,208,127,.35); background: rgba(53,208,127,.08)}
-    .tag.warn{color:#fff0c2; border-color: rgba(255,200,87,.35); background: rgba(255,200,87,.08)}
-    .tag.info{color:#d9ffeF; border-color: rgba(67,211,138,.25); background: rgba(67,211,138,.06)}
+    <meta charset="UTF-8">
+    <title>Хранители Тайги: 3D RPG (v3.0 — Маунты, Карта на M и 100 Квестов)</title>
+    <style>
+        * { box-sizing: border-box; user-select: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #0e1711; color: #ece6d5; }
 
-    .meter{height:10px; border-radius:999px; border:1px solid var(--border); background: rgba(255,255,255,.04); overflow:hidden}
-    .bar{height:100%; width:0%; background: linear-gradient(90deg, rgba(67,211,138,.75), rgba(255,200,87,.75)); transition: width .25s ease}
-    .footer{
-      padding:12px 18px 16px;
-      border-top:1px solid var(--border);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      color:var(--muted);
-      font-size:12px;
-    }
-    .side{display:flex; flex-direction:column; gap:16px}
-    .shopItem{
-      display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
-      padding:10px; border-radius:14px; border:1px solid var(--border);
-      background: rgba(255,255,255,.04);
-    }
-    .shopItem b{display:block; font-size:13px}
-    .shopItem span{display:block; font-size:12px; color:var(--muted); margin-top:2px; line-height:1.25}
-    .mini{font-size:12px; color:var(--muted)}
-    .kbd{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      padding:2px 6px; border-radius:8px; border:1px solid var(--border);
-      background: rgba(255,255,255,.05); color:var(--text); font-size:11px;
-    }
-    .blink{animation: blink 1.1s infinite}
-    @keyframes blink{0%,100%{opacity:1}50%{opacity:.55}}
-    .taskBox{
-      border:1px dashed rgba(255,255,255,.16);
-      border-radius:16px;
-      padding:12px;
-      background: rgba(255,255,255,.03);
-      display:grid;
-      gap:10px;
-    }
-    .taskTitle{display:flex; justify-content:space-between; gap:10px; align-items:center}
-    .taskTitle b{font-size:13px}
-    .progressOuter{
-      height:12px; border-radius:999px; border:1px solid var(--border);
-      background: rgba(255,255,255,.04); overflow:hidden;
-    }
-    .progressInner{
-      height:100%;
-      width:0%;
-      background: linear-gradient(90deg, rgba(255,77,109,.65), rgba(255,200,87,.65), rgba(67,211,138,.65));
-      transition: width .2s linear;
-    }
-    .smallRow{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
-    .badge{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:6px 10px; border-radius:999px; border:1px solid var(--border);
-      background: rgba(255,255,255,.04);
-      color:var(--muted); font-size:12px;
-    }
-  </style>
+        /* Экран создания персонажа */
+        #char-creation {
+            position: absolute; inset: 0; z-index: 100;
+            background: radial-gradient(circle at center, rgba(16,32,22,0.55) 0%, rgba(8,14,10,0.92) 100%);
+            display: flex; align-items: center; justify-content: flex-start; padding-left: 7%;
+        }
+        .creator-card {
+            background: rgba(24, 36, 28, 0.94); border: 2px solid #6b9460; border-radius: 14px;
+            padding: 26px 32px; width: 450px; box-shadow: 0 25px 60px rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+        }
+        .creator-card h1 { margin: 0 0 4px 0; color: #b5e892; font-size: 25px; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
+        .creator-card p.sub { margin: 0 0 18px 0; text-align: center; color: #9cb396; font-size: 12px; }
+        .form-group { margin-bottom: 14px; }
+        .form-group label { display: block; margin-bottom: 5px; font-size: 13px; font-weight: bold; color: #cfe0c7; }
+        .form-group input[type="text"], .form-group select {
+            width: 100%; padding: 9px 12px; background: #121c15; border: 1px solid #4a6b47;
+            border-radius: 6px; color: #fff; font-size: 14px; outline: none;
+        }
+        .color-row { display: flex; gap: 10px; }
+        .color-item { flex: 1; background: #121c15; padding: 7px; border-radius: 6px; border: 1px solid #385237; text-align: center; }
+        .color-item span { display: block; font-size: 11px; color: #9ab094; margin-bottom: 4px; }
+        .color-item input[type="color"] { width: 100%; height: 30px; border: none; background: none; cursor: pointer; }
+        .class-desc { background: #141f17; border-left: 3px solid #82bf5c; padding: 9px 12px; font-size: 12px; color: #bfd1b8; margin-top: 8px; border-radius: 0 6px 6px 0; line-height: 1.4; }
+        .btn-start {
+            width: 100%; margin-top: 10px; padding: 13px; background: linear-gradient(180deg, #64a140 0%, #3e6e23 100%);
+            border: 1px solid #91d16b; border-radius: 8px; color: #fff; font-size: 16px; font-weight: bold;
+            cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: 0.2s;
+        }
+        .btn-start:hover { filter: brightness(1.15); transform: translateY(-1px); }
+
+        /* Игровой интерфейс (HUD) */
+        #hud { position: absolute; inset: 0; pointer-events: none; z-index: 10; display: none; }
+        .panel { background: rgba(16, 25, 19, 0.88); border: 1px solid #53734c; border-radius: 10px; pointer-events: auto; box-shadow: 0 8px 24px rgba(0,0,0,0.65); backdrop-filter: blur(4px); }
+
+        /* Левый верх: Фрейм игрока + Монеты + Текущий маунт */
+        #player-frame { position: absolute; top: 14px; left: 14px; width: 290px; padding: 12px 14px; }
+        .pf-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .pf-name { font-weight: bold; font-size: 16px; color: #e2f2d5; }
+        .pf-lvl { font-size: 12px; color: #a3c985; background: #263d23; padding: 2px 8px; border-radius: 10px; border: 1px solid #4e7848; font-weight: bold; }
+        .bar-wrap { width: 100%; height: 17px; background: #0d140f; border: 1px solid #334730; border-radius: 4px; margin-bottom: 8px; position: relative; overflow: hidden; }
+        .bar-fill { height: 100%; transition: width 0.2s; }
+        #hp-fill { background: linear-gradient(90deg, #a82e2e, #e34646); width: 100%; }
+        .bar-text { position: absolute; inset: 0; font-size: 11px; line-height: 15px; text-align: center; color: #fff; text-shadow: 0 1px 2px #000; font-weight: bold; }
+        .pf-economy { display: flex; justify-content: space-between; align-items: center; font-size: 12px; padding-top: 4px; border-top: 1px solid #2b4029; }
+        .coin-badge { color: #ffd859; font-weight: bold; font-size: 14px; }
+        .mount-badge { color: #8ad6ff; font-size: 11px; background: #162936; padding: 2px 7px; border-radius: 6px; border: 1px solid #2f5b78; }
+
+        /* Верх по центру: Фрейм цели */
+        #target-frame { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); width: 290px; padding: 10px 14px; text-align: center; display: none; }
+        #target-name { font-weight: bold; font-size: 15px; color: #f5d77f; margin-bottom: 3px; }
+        #target-sub { font-size: 12px; color: #a7ba9f; margin-bottom: 7px; }
+        #target-action-btn {
+            background: #3e692c; border: 1px solid #75ad5c; color: #fff; padding: 5px 14px;
+            border-radius: 5px; font-size: 12px; cursor: pointer; font-weight: bold;
+        }
+        #target-action-btn:hover { background: #4f8538; }
+
+        /* Правый верх: Мини-карта и Журнал 100 Квестов */
+        #right-column { position: absolute; top: 14px; right: 14px; width: 300px; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
+        #minimap-box { padding: 10px; text-align: center; }
+        .mm-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+        #minimap-title { font-size: 11px; color: #9fc488; font-weight: bold; text-transform: uppercase; }
+        .btn-mini { background: #263d23; border: 1px solid #567d4f; color: #d5ebd0; font-size: 10px; padding: 2px 7px; border-radius: 4px; cursor: pointer; }
+        .btn-mini:hover { background: #365732; }
+        #minimap { background: #0e1a11; border: 2px solid #52734b; border-radius: 50%; display: block; margin: 0 auto; cursor: pointer; }
+        .map-legend { display: flex; justify-content: center; gap: 8px; font-size: 10px; color: #a8b8a2; margin-top: 5px; }
+        .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 3px; vertical-align: middle; }
+
+        #quest-tracker { padding: 12px 14px; }
+        .qt-header { display: flex; justify-content: space-between; font-size: 12px; font-weight: bold; color: #f2c968; text-transform: uppercase; margin-bottom: 5px; border-bottom: 1px solid #364d33; padding-bottom: 4px; }
+        .qt-cat { font-size: 10px; padding: 1px 6px; border-radius: 4px; background: #3b2e16; color: #ffd278; }
+        #quest-title { font-size: 14px; font-weight: bold; color: #fff; margin-bottom: 5px; }
+        #quest-desc { font-size: 12px; color: #b7c7b1; line-height: 1.38; margin-bottom: 8px; }
+        #quest-obj { font-size: 12px; color: #9be376; font-weight: bold; background: rgba(0,0,0,0.38); padding: 6px 8px; border-radius: 4px; border-left: 3px solid #74b851; margin-bottom: 6px; }
+        #quest-reward { font-size: 11px; color: #ffd859; font-weight: bold; }
+
+        /* Правый низ: Инвентарь */
+        #inventory-panel { position: absolute; bottom: 32px; right: 14px; width: 300px; padding: 10px 12px; }
+        .inv-header { display: flex; justify-content: space-between; font-size: 12px; font-weight: bold; color: #c7d9bf; margin-bottom: 6px; }
+        .inv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+        .inv-slot {
+            background: #111a14; border: 1px solid #395236; border-radius: 6px; padding: 6px 4px;
+            text-align: center; position: relative;
+        }
+        .inv-icon { font-size: 19px; display: block; }
+        .inv-name { font-size: 10px; color: #a7ba9f; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .inv-count {
+            position: absolute; top: 3px; right: 5px; font-size: 10px; font-weight: bold;
+            color: #fff; background: rgba(0,0,0,0.75); padding: 1px 4px; border-radius: 6px;
+        }
+
+        /* Низ по центру: Панель скиллов и Нижняя шкала опыта в стиле WoW */
+        #action-bar {
+            position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 8px; padding: 8px 12px;
+        }
+        .skill-btn {
+            width: 54px; height: 54px; background: #142117; border: 2px solid #577850;
+            border-radius: 8px; position: relative; cursor: pointer; display: flex;
+            flex-direction: column; align-items: center; justify-content: center; transition: 0.15s;
+        }
+        .skill-btn:hover { border-color: #9de079; transform: translateY(-2px); }
+        .skill-key { position: absolute; top: 2px; left: 5px; font-size: 10px; font-weight: bold; color: #c5d6be; }
+        .skill-icon { font-size: 20px; }
+        .skill-label { font-size: 9px; color: #a7ba9f; margin-top: 2px; text-align: center; }
+        .cd-overlay {
+            position: absolute; inset: 0; background: rgba(0,0,0,0.78); border-radius: 6px;
+            display: none; align-items: center; justify-content: center; font-size: 15px; font-weight: bold; color: #f5d77f;
+        }
+
+        /* Широкая шкала опыта WoW вдоль самого низа экрана */
+        #wow-xp-bar {
+            position: absolute; bottom: 6px; left: 14px; right: 14px; height: 18px;
+            background: #0b110d; border: 1px solid #4c6946; border-radius: 9px; overflow: hidden;
+            pointer-events: auto; box-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
+        #wow-xp-fill {
+            height: 100%; width: 0%;
+            background: linear-gradient(90deg, #5e2ca5 0%, #9b51e0 50%, #c47aff 100%);
+            transition: width 0.25s;
+        }
+        .xp-ticks {
+            position: absolute; inset: 0;
+            background-image: repeating-linear-gradient(to right, transparent, transparent 9.9%, rgba(0,0,0,0.45) 10%);
+        }
+        #wow-xp-text {
+            position: absolute; inset: 0; text-align: center; line-height: 16px;
+            font-size: 11px; font-weight: bold; color: #f3e8ff; text-shadow: 0 1px 2px #000;
+        }
+
+        /* Левый низ: Лог событий */
+        #log-panel { position: absolute; bottom: 32px; left: 14px; width: 335px; padding: 10px 12px; }
+        #event-log { height: 100px; overflow-y: auto; font-size: 12px; line-height: 1.4; display: flex; flex-direction: column; gap: 3px; }
+        .log-msg { color: #c6d6bf; }
+        .log-loot { color: #8ce868; }
+        .log-quest { color: #f5cf67; font-weight: bold; }
+        .log-warn { color: #ff7b72; font-weight: bold; }
+        .controls-hint { margin-top: 6px; padding-top: 5px; border-top: 1px solid #2e422b; font-size: 10.5px; color: #95ad8e; line-height: 1.35; }
+
+        /* ПОЛНОЭКРАННАЯ КАРТА МИРА С ТУМАНОМ ВОЙНЫ (КЛАВИША M) */
+        #world-map-modal {
+            position: absolute; inset: 0; background: rgba(8, 14, 10, 0.88); z-index: 60;
+            display: none; align-items: center; justify-content: center; pointer-events: auto;
+        }
+        .map-window {
+            background: #221c15; border: 3px solid #8c6f3e; border-radius: 12px; padding: 16px 20px;
+            width: 700px; box-shadow: 0 25px 70px rgba(0,0,0,0.95); text-align: center;
+        }
+        .map-win-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; color: #f2d492; }
+        .map-win-header h2 { margin: 0; font-size: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        #big-map-canvas { border: 2px solid #634d29; border-radius: 8px; background: #2e261b; display: block; margin: 0 auto; }
+        .map-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-size: 12px; color: #cbb68a; }
+
+        /* МАГАЗИН МАУНТОВ МЕХАНИКА ПЕТРОВИЧА (КЛАВИША B) */
+        #shop-modal {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 580px; padding: 20px 24px; display: none; z-index: 65;
+            background: #18241b; border: 2px solid #7eab65; border-radius: 12px; pointer-events: auto;
+        }
+        .shop-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #354d32; padding-bottom: 10px; margin-bottom: 14px; }
+        .shop-title { font-size: 19px; font-weight: bold; color: #f2c968; }
+        .mount-list { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+        .mount-card {
+            background: #111a13; border: 1px solid #3e593b; border-radius: 8px; padding: 12px;
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .mount-card.active-mount { border-color: #ffd859; background: #1b2919; }
+        .mc-top { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+        .mc-icon { font-size: 28px; }
+        .mc-name { font-weight: bold; font-size: 14px; color: #e4f2d8; }
+        .mc-req { font-size: 11px; color: #9ab392; }
+        .mc-desc { font-size: 11.5px; color: #b2c4ac; margin-bottom: 10px; line-height: 1.35; }
+        .btn-mount {
+            width: 100%; padding: 8px; border-radius: 6px; font-weight: bold; font-size: 12px;
+            cursor: pointer; border: 1px solid #6b9e54; background: #376125; color: #fff;
+        }
+        .btn-mount:hover { background: #487d31; }
+        .btn-mount:disabled { background: #252e26; border-color: #3d4a3e; color: #718072; cursor: not-allowed; }
+
+        /* Диалоговое окно квестов */
+        #dialog-modal {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 470px; padding: 22px 26px; display: none; z-index: 55;
+            background: #1b281e; border: 2px solid #82ab6b; border-radius: 12px; pointer-events: auto;
+        }
+        .dlg-npc { font-size: 18px; font-weight: bold; color: #f2c968; margin-bottom: 2px; }
+        .dlg-role { font-size: 12px; color: #93ab8c; margin-bottom: 12px; }
+        #dlg-text { font-size: 14px; color: #e4ede0; line-height: 1.5; margin-bottom: 16px; background: #121c15; padding: 12px 14px; border-radius: 6px; border-left: 3px solid #f2c968; }
+        .dlg-buttons { display: flex; justify-content: flex-end; gap: 10px; }
+        .btn-dlg {
+            padding: 9px 16px; border-radius: 6px; font-size: 13px; font-weight: bold; cursor: pointer; border: 1px solid #6c9c56;
+            background: #3d6b29; color: #fff;
+        }
+        .btn-dlg:hover { background: #4d8535; }
+        .btn-dlg.secondary { background: #263328; border-color: #495e4c; color: #b7c7b1; }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
-  <div class="wrap">
-    <section class="card">
-      <header>
-        <div class="title">
-          <h1>🌲 Лесничество: «ЗП НЕ ПОДНИМАЮТ» (кринж-сим)</h1>
-          <div class="sub">Служба: патрули, термоточки, акты, проверки. Награда: «спасибо» и ещё одна бумага.</div>
-        </div>
-        <div class="pill">Сезон: <span class="blink">пожароопасный</span></div>
-      </header>
 
-      <div class="main">
-        <div class="grid2">
-          <div class="stat">
-            <div class="k">Зарплата «на руки» (баланс)</div>
-            <div class="v"><span id="money">68000</span> ₽</div>
-            <div class="hint">Утекает на ГСМ, еду и «мелочи».</div>
-          </div>
-          <div class="stat">
-            <div class="k">Нагрузка</div>
-            <div class="v"><span id="load">1.00</span>×</div>
-            <div class="hint">Чем выше — тем больше термоточек и бумажек.</div>
-          </div>
-          <div class="stat">
-            <div class="k">Мораль</div>
-            <div class="v"><span id="morale">75</span>/100</div>
-            <div class="meter"><div id="moraleBar" class="bar"></div></div>
-          </div>
-          <div class="stat">
-            <div class="k">Кринж от руководства</div>
-            <div class="v"><span id="cringe">12</span>/100</div>
-            <div class="meter"><div id="cringeBar" class="bar"></div></div>
-          </div>
-        </div>
+    <!-- ЭКРАН СОЗДАНИЯ ГЕРОЯ -->
+    <div id="char-creation">
+        <div class="creator-card">
+            <h1>Хранители Тайги 3.0</h1>
+            <p class="sub">100 Квестов • Карта на M • Гараж Маунтов • Лица и Оптимизация</p>
 
-        <div class="smallRow">
-          <div class="badge">🔥 Термоточек: <b id="fires">0</b></div>
-          <div class="badge">🦌 Браконьеры: <b id="poach">0</b></div>
-          <div class="badge">📄 Жалобы: <b id="complaints">0</b></div>
-          <div class="badge">⭐ Репутация: <b id="rep">50</b>/100</div>
-        </div>
-
-        <div class="btnRow">
-          <button class="primary" id="patrol">🚙 Патруль</button>
-          <button class="warnBtn" id="writeAct">🧾 Написать акт</button>
-          <button class="primary" id="closeFire">🧯 Закрыть термоточку (60 сек)</button>
-          <button class="ghost" id="callWeekend">☎️ Вызвать людей в выходной</button>
-          <button class="danger" id="askRaise">🙏 Попросить повышение</button>
-        </div>
-
-        <div class="taskBox">
-          <div class="taskTitle">
-            <b>⏳ Текущая задача</b>
-            <span class="mini">Подсказки: <span class="kbd">Space</span> — завершить день • <span class="kbd">R</span> — попросить повышение</span>
-          </div>
-          <div class="mini" id="taskText">Ничего не делается. Идеальный момент для нового поручения.</div>
-          <div class="progressOuter"><div id="taskProg" class="progressInner"></div></div>
-        </div>
-
-        <div class="log" id="log" aria-live="polite"></div>
-
-        <div class="btnRow">
-          <button class="good" id="endDay">🌙 Завершить день</button>
-          <button class="ghost" id="reset">🔁 Новый месяц</button>
-          <button class="ghost" id="mute">🔊 Звук: ВКЛ</button>
-        </div>
-
-        <div class="hint">
-          Условия победы: дожить до дня 30 с моралью ≥ 40, жалобами ≤ 5 и кринжем ≤ 70.
-          Легендарный вин: выбить повышение (шанс низкий, как индексировать оклад).
-        </div>
-      </div>
-
-      <div class="footer">
-        <div>День: <b id="day">1</b> / 30 • Режим: <span class="blink">«бумага любит всё»</span></div>
-        <div>Достижения: <b id="ach">0</b></div>
-      </div>
-    </section>
-
-    <aside class="side">
-      <section class="card">
-        <header>
-          <div class="title">
-            <h1>🛒 Склад выживания</h1>
-            <div class="sub">Покупай «апгрейды», чтобы гасить пожары и кринж.</div>
-          </div>
-          <div class="pill">Оплата: рубли</div>
-        </header>
-        <div class="main">
-          <div class="shopItem">
-            <div>
-              <b>⛽ Канистра “на всякий”</b>
-              <span>-0.05 к росту нагрузки на 5 дней.</span>
-              <span class="mini">Цена: 1500 ₽</span>
+            <div class="form-group">
+                <label>Имя лесничего:</label>
+                <input type="text" id="inp-name" value="Александр" maxlength="18">
             </div>
-            <button id="buyFuel">Купить</button>
-          </div>
 
-          <div class="shopItem">
-            <div>
-              <b>📻 Рация “чтоб не искать людей”</b>
-              <span>Патруль чаще даёт успех (+репутация).</span>
-              <span class="mini">Цена: 2200 ₽</span>
+            <div class="form-group">
+                <label>Специализация (Класс):</label>
+                <select id="inp-class" onchange="updateClassDesc()">
+                    <option value="taxator">Участковый таксатор (+35% к радиусу поиска и открытию карты)</option>
+                    <option value="herbalist">Бортник-травник (+1 ед. при сборе редких ресурсов и +20% монет)</option>
+                    <option value="ranger">Таёжный следопыт (+20% к скорости бега/езды и +35 Здоровья)</option>
+                </select>
+                <div class="class-desc" id="class-desc-box">
+                    Мастер лесной инвентаризации и отвода делянок. Быстрее открывает Туман Войны на карте и замечает цели издалека.
+                </div>
             </div>
-            <button id="buyRadio">Купить</button>
-          </div>
 
-          <div class="shopItem">
-            <div>
-              <b>🧘 Полевой дзен</b>
-              <span>-15 кринжа, +6 морали.</span>
-              <span class="mini">Цена: 900 ₽</span>
+            <div class="form-group">
+                <label>Внешность героя (камера смотрит прямо на лицо):</label>
+                <div class="color-row">
+                    <div class="color-item">
+                        <span>Штормовка</span>
+                        <input type="color" id="col-coat" value="#2e5936" oninput="updateHeroColors()">
+                    </div>
+                    <div class="color-item">
+                        <span>Рюкзак</span>
+                        <input type="color" id="col-pack" value="#80532a" oninput="updateHeroColors()">
+                    </div>
+                    <div class="color-item">
+                        <span>Шапка / Брови</span>
+                        <input type="color" id="col-hair" value="#753020" oninput="updateHeroColors()">
+                    </div>
+                </div>
             </div>
-            <button id="buyZen">Купить</button>
-          </div>
 
-          <div class="shopItem">
-            <div>
-              <b>📚 Папка “акты без ошибок”</b>
-              <span>Акты пишутся быстрее (меньше жалоб).</span>
-              <span class="mini">Цена: 1800 ₽</span>
-            </div>
-            <button id="buyFolder">Купить</button>
-          </div>
-
-          <div class="shopItem">
-            <div>
-              <b>🧊 “Лицо инспектора”</b>
-              <span>Один раз спасает от проверки (жалобы не растут).</span>
-              <span class="mini">Цена: 3200 ₽</span>
-            </div>
-            <button id="buyFace">Купить</button>
-          </div>
-
-          <div class="hint">Лесной закон суров, но бухгалтерия суровее.</div>
+            <button class="btn-start" onclick="startGame()">Начать смену в Тайге</button>
         </div>
-      </section>
+    </div>
 
-      <section class="card">
-        <header>
-          <div class="title">
-            <h1>📌 Лор (кринж)</h1>
-            <div class="sub">Начальник всегда “в курсе”.</div>
-          </div>
-          <div class="pill">мемы</div>
-        </header>
-        <div class="main">
-          <div class="hint" id="lore">
-            🔸 “Оклад поднять нельзя, но отчёт переписать можно.”<br/>
-            🔸 “Термоточка — это не пожар, это ‘событие’.”<br/>
-            🔸 “Проверка — это когда тебя спрашивают то, что сами не знают.”
-          </div>
+    <!-- ИГРОВОЙ ИНТЕРФЕЙС -->
+    <div id="hud">
+        <!-- Левый верх -->
+        <div id="player-frame" class="panel">
+            <div class="pf-header">
+                <span class="pf-name" id="hud-name">Александр</span>
+                <span class="pf-lvl" id="hud-lvl">Ур. 1 • Таксатор</span>
+            </div>
+            <div class="bar-wrap">
+                <div class="bar-fill" id="hp-fill"></div>
+                <div class="bar-text" id="hp-text">Здоровье: 100 / 100</div>
+            </div>
+            <div class="pf-economy">
+                <span class="coin-badge">🪙 <span id="hud-coins">50</span> шишек</span>
+                <span class="mount-badge" id="hud-mount-name">🚶 Пешком [Z]</span>
+            </div>
         </div>
-      </section>
-    </aside>
-  </div>
+
+        <!-- Центр верх: Цель -->
+        <div id="target-frame" class="panel">
+            <div id="target-name">Кузьмич</div>
+            <div id="target-sub">Дистанция: 3.2 м</div>
+            <button id="target-action-btn" onclick="interactWithSelected()">Действие [F]</button>
+        </div>
+
+        <!-- Правая колонка: Миникарта и Квесты -->
+        <div id="right-column">
+            <div id="minimap-box" class="panel">
+                <div class="mm-top">
+                    <span id="minimap-title">Радар сектора</span>
+                    <button class="btn-mini" onclick="toggleWorldMap()">Карта мира [M]</button>
+                </div>
+                <canvas id="minimap" width="164" height="164" onclick="toggleWorldMap()" title="Нажмите M для открытия полной карты"></canvas>
+                <div class="map-legend">
+                    <span><i class="dot" style="background:#ffd84d;"></i>Цель квеста</span>
+                    <span><i class="dot" style="background:#62d96b;"></i>Ресурс</span>
+                    <span><i class="dot" style="background:#ff4d4d;"></i>Шатун</span>
+                </div>
+            </div>
+
+            <div id="quest-tracker" class="panel">
+                <div class="qt-header">
+                    <span id="quest-counter">Квест 1 из 100</span>
+                    <span class="qt-cat" id="quest-cat">Сюжет</span>
+                </div>
+                <div id="quest-title">Прибытие на Кордон</div>
+                <div id="quest-desc">Подойдите к Старшему егерю Кузьмичу у избы.</div>
+                <div id="quest-obj">Задача: Поговорить с Кузьмичом (0/1)</div>
+                <div id="quest-reward">Награда: +60 Опыта, 🪙 45 шишек</div>
+            </div>
+        </div>
+
+        <!-- Левый низ: Лог -->
+        <div id="log-panel" class="panel">
+            <div id="event-log">
+                <div class="log-msg">Добро пожаловать в Большую Тайгу (650x650 м)!</div>
+                <div class="log-quest">Нажмите [M] для карты с туманом войны или [B] для гаража маунтов.</div>
+            </div>
+            <div class="controls-hint">
+                <b>WASD</b> — ход/руль | <b>ПКМ</b> — камера | <b>F / ЛКМ</b> — действие | <b>M</b> — Карта мира | <b>Z</b> — Сесть на маунт | <b>B</b> — Гараж транспорта (вертолёт: <b>Пробел</b> вверх, <b>C</b> вниз)
+            </div>
+        </div>
+
+        <!-- Центр низ: Панель скиллов -->
+        <div id="action-bar" class="panel">
+            <div class="skill-btn" onclick="useSkill(1)" title="Подсвечивает ресурсы и показывает 3D-стрелку к цели текущего квеста">
+                <span class="skill-key">1</span>
+                <span class="skill-icon">🧭</span>
+                <span class="skill-label">Таксация</span>
+                <div class="cd-overlay" id="cd-1"></div>
+            </div>
+            <div class="skill-btn" onclick="useSkill(2)" title="Восстанавливает здоровье бальзамом или ягодами">
+                <span class="skill-key">2</span>
+                <span class="skill-icon">🍵</span>
+                <span class="skill-label">Отвар</span>
+                <div class="cd-overlay" id="cd-2"></div>
+            </div>
+            <div class="skill-btn" onclick="useSkill(3)" title="Ускоряет бег на 6 секунд">
+                <span class="skill-key">3</span>
+                <span class="skill-icon">🥾</span>
+                <span class="skill-label">Рывок</span>
+                <div class="cd-overlay" id="cd-3"></div>
+            </div>
+            <div class="skill-btn" onclick="toggleMount()" title="Оседлать / Спешиться с выбранного транспорта">
+                <span class="skill-key">Z</span>
+                <span class="skill-icon" id="bar-mount-icon">🛞</span>
+                <span class="skill-label">Маунт</span>
+            </div>
+            <div class="skill-btn" onclick="toggleShopModal()" title="Открыть гараж транспорта механика Петровича">
+                <span class="skill-key">B</span>
+                <span class="skill-icon">🚜</span>
+                <span class="skill-label">Гараж</span>
+            </div>
+            <div class="skill-btn" onclick="toggleWorldMap()" title="Открыть карту Тайги с туманом войны">
+                <span class="skill-key">M</span>
+                <span class="skill-icon">🗺️</span>
+                <span class="skill-label">Карта</span>
+            </div>
+            <div class="skill-btn" onclick="interactWithSelected()" title="Собрать ресурс, сыграть в шашки или поговорить">
+                <span class="skill-key">F</span>
+                <span class="skill-icon">✋</span>
+                <span class="skill-label">Действие</span>
+            </div>
+        </div>
+
+        <!-- Правый низ: Инвентарь -->
+        <div id="inventory-panel" class="panel">
+            <div class="inv-header">
+                <span>Полевой рюкзак</span>
+                <span id="inv-total">Предметов: 0</span>
+            </div>
+            <div class="inv-grid">
+                <div class="inv-slot"><span class="inv-icon">🍄</span><span class="inv-name">Боровик</span><span class="inv-count" id="cnt-mushroom">0</span></div>
+                <div class="inv-slot"><span class="inv-icon">🍒</span><span class="inv-name">Брусника</span><span class="inv-count" id="cnt-berry">0</span></div>
+                <div class="inv-slot"><span class="inv-icon">🪵</span><span class="inv-name">Кора ивы</span><span class="inv-count" id="cnt-bark">0</span></div>
+                <div class="inv-slot"><span class="inv-icon">🪨</span><span class="inv-name">Чага</span><span class="inv-count" id="cnt-chaga">0</span></div>
+                <div class="inv-slot"><span class="inv-icon">🍯</span><span class="inv-name">Липовый мёд</span><span class="inv-count" id="cnt-honey">0</span></div>
+                <div class="inv-slot"><span class="inv-icon">🧪</span><span class="inv-name">Бальзам</span><span class="inv-count" id="cnt-balm">0</span></div>
+            </div>
+        </div>
+
+        <!-- Полноширинная полоса опыта внизу экрана как в WoW -->
+        <div id="wow-xp-bar">
+            <div id="wow-xp-fill"></div>
+            <div class="xp-ticks"></div>
+            <div id="wow-xp-text">Уровень 1 • Опыт: 0 / 100 (0%)</div>
+        </div>
+
+        <!-- ОКНО КАРТЫ МИРА НА КЛАВИШУ M (С ТУМАНОМ ВОЙНЫ) -->
+        <div id="world-map-modal">
+            <div class="map-window">
+                <div class="map-win-header">
+                    <h2>🗺️ Топографическая карта Лесничества (Туман Войны)</h2>
+                    <button class="btn-dlg secondary" onclick="toggleWorldMap()">Закрыть [M]</button>
+                </div>
+                <canvas id="big-map-canvas" width="640" height="480"></canvas>
+                <div class="map-footer">
+                    <span id="map-explored-pct">Исследовано территории: 6%</span>
+                    <span>🟡 Жёлтый маркер — цель текущего квеста | ⚪ Белая стрелка — вы</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ОКНО ГАРАЖА МАУНТОВ МЕХАНИКА ПЕТРОВИЧА (КЛАВИША B) -->
+        <div id="shop-modal">
+            <div class="shop-header">
+                <div>
+                    <div class="shop-title">🔧 Гараж лесной техники Петровича</div>
+                    <div style="font-size:12px; color:#9ab392;">Покупайте транспорт за золотые шишки и вызывайте в любой момент клавишей [Z]</div>
+                </div>
+                <div class="coin-badge">🪙 <span id="shop-coins">50</span></div>
+            </div>
+            <div class="mount-list" id="mount-cards-container"></div>
+            <div style="text-align:right;">
+                <button class="btn-dlg secondary" onclick="toggleShopModal()">Закрыть [B]</button>
+            </div>
+        </div>
+
+        <!-- ОКНО ДИАЛОГА КВЕСТОВ -->
+        <div id="dialog-modal" class="panel">
+            <div class="dlg-npc" id="dlg-npc-name">Кузьмич</div>
+            <div class="dlg-role" id="dlg-npc-role">Старший лесничий Кордона №4</div>
+            <div id="dlg-text">Приветствую!</div>
+            <div class="dlg-buttons">
+                <button class="btn-dlg secondary" onclick="closeDialog()">Позже</button>
+                <button class="btn-dlg" id="dlg-accept-btn" onclick="completeOrAdvanceQuest()">Выполнить</button>
+            </div>
+        </div>
+    </div>
 
 <script>
-(() => {
-  // ----- STATE -----
-  let day = 1;
+// ==========================================
+// 1. БАЗОВЫЕ ДАННЫЕ, МАУНТЫ И ЭКОНОМИКА
+// ==========================================
+let gameStarted = false;
+const WORLD_SIZE = 640; // Расширенный мир 640x640 метров
 
-  // "баланс" как на руки
-  let money = 68000;
+const MOUNTS = {
+    none: { id: 'none', name: 'Пешком', icon: '🚶', reqLvl: 1, price: 0, speedMult: 1.0, fly: false, desc: 'Своими двоих по мху и валежнику.' },
+    monowheel: { id: 'monowheel', name: 'Моноколесо «Егерь-М1»', icon: '🛞', reqLvl: 2, price: 120, speedMult: 1.6, fly: false, desc: 'Бесшумное гироколесо с внедорожным протектором. Отлично маневрирует между сосен.' },
+    atv: { id: 'atv', name: 'Квадроцикл «Росомаха»', icon: '🚜', reqLvl: 4, price: 350, speedMult: 2.15, fly: false, desc: 'Мощный таёжный четырёхколёсник с лебёдкой и фарой.' },
+    uaz: { id: 'uaz', name: 'УАЗ-452 «Буханка»', icon: '🚙', reqLvl: 7, price: 800, speedMult: 2.8, fly: false, desc: 'Легенда лесоохраны! Не знает преград, защищает от медведей и мчит как ветер.' },
+    heli: { id: 'heli', name: 'Вертолёт «Тайга-Аэро»', icon: '🚁', reqLvl: 10, price: 1800, speedMult: 3.8, fly: true, desc: 'Лесопатрульный вертолёт! Позволяет взлетать над кронами деревьев (Пробел — вверх, C — вниз).' }
+};
 
-  // нагрузка (аналог инфляции в прошлой версии)
-  let load = 1.00;
+const state = {
+    name: "Александр",
+    charClass: "taxator",
+    level: 1,
+    xp: 0,
+    xpNext: 100,
+    coins: 50,
+    hp: 100,
+    maxHp: 100,
+    speedMultiplier: 1.0,
+    senseRange: 55,
+    bonusHerb: 0,
+    coinBonus: 1.0,
+    ownedMounts: ['none'],
+    equippedMount: 'none',
+    activeMount: 'none',
+    inventory: { mushroom: 0, berry: 0, bark: 0, chaga: 0, honey: 0, balm: 0 },
+    cooldowns: { 1: 0, 2: 0, 3: 0 },
+    buffs: { senseTimer: 0, sprintTimer: 0 },
+    currentQuestIndex: 0,
+    questProgress: 0,
+    questNeedsTurnIn: false
+};
 
-  let morale = 75;
-  let cringe = 12;
+const classDescriptions = {
+    taxator: "Мастер лесной инвентаризации и отвода делянок. На 35% шире открывает Туман Войны на карте (M) и дальше видит квестовые цели.",
+    herbalist: "Знаток таёжной фармакопеи. При сборе любых редких дикоросов и мёда получает +1 предмет и на 20% больше золотых шишек за квесты.",
+    ranger: "Выносливый ходок по пересечённой местности. Имеет +35 к максимальному здоровью и на 20% быстрее передвигается пешком и на маунтах."
+};
 
-  let fires = 0;        // термоточки
-  let poach = 0;        // браконьеры
-  let complaints = 0;   // жалобы/наезды
-  let rep = 50;         // репутация
+function updateClassDesc() {
+    document.getElementById('class-desc-box').innerText = classDescriptions[document.getElementById('inp-class').value];
+}
 
-  let achievements = 0;
-  let muted = false;
+// ==========================================
+// 2. ГЕНЕРАТОР 100 ПРОДУМАННЫХ КВЕСТОВ (ЮМОР + СЕРЬЁЗНЫЕ)
+// ==========================================
+const QUEST_LIST = [];
 
-  // upgrades
-  let loadShieldDays = 0;
-  let hasRadio = false;
-  let hasFolder = false;
-  let hasInspectorFace = false;
-  let faceUsed = false;
+function build100Quests() {
+    // Первые 20 — вручную прописанные яркие сюжетные и юмористические квесты
+    const handcrafted = [
+        { title: "Прибытие на Кордон №4", cat: "Сюжет", targetType: "npc_kuzmich", req: 1, xp: 60, coins: 45,
+          desc: "Подойдите к Старшему егерю Кузьмичу у деревянной избы на кордоне (F или ЛКМ) и доложите о заступлении на смену.",
+          dlg: "Здорово, лесничий! Вижу, и глаза горят, и сапоги крепкие. У нас тут 100 поручений в журнале накопилось: от серьёзной таксации до переговоров с местной фауной. Держи первые подъёмные шишки!" },
+        { title: "Суп из трёх боровиков", cat: "Быт кордона", targetType: "mushroom", req: 3, xp: 75, coins: 50,
+          desc: "Соберите 3 крепких боровика вокруг кордона для наваристой таёжной похлебки.",
+          dlg: "Ух, какие шляпки бархатные! Сейчас Кузьмич такую грибовницу заправит — за уши не оттянешь." },
+        { title: "Знакомство с Механиком Петровичем", cat: "Транспорт", targetType: "npc_mechanic", req: 1, xp: 80, coins: 70,
+          desc: "Подойдите к Механику Петровичу у гаража на кордоне, чтобы узнать про покупку Моноколеса, Квадроцикла, УАЗика и Вертолёта.",
+          dlg: "Привет, командир! Как подкопишь 120 золотых шишек и возьмешь 2-й уровень — заглядывай в Гараж [B], выдам тебе скоростное Моноколесо «Егерь-М1»!" },
+        { title: "Партия в шашки с медведем Потапычем", cat: "Юмор", targetType: "checker_table", req: 1, xp: 110, coins: 85,
+          desc: "На восточной опушке (X: 55, Z: 30) сидит культурный медведь Потапыч за пеньком с шашечной доской. Сыграйте с ним партию на банку мёда!",
+          dlg: "Хо-хо! Ты реально обыграл Потапыча в «дамки»?! Он мне в прошлом месяце два туеска брусники проиграл, до сих пор дуется, но правила чтит!" },
+        { title: "Ставка Потапыча: Липовый мёд", cat: "Юмор", targetType: "honey", req: 2, xp: 120, coins: 90,
+          desc: "Медведь Потапыч требует реванш, но только под сладкий чай. Соберите 2 соты дикого липового мёда с бортевых колод.",
+          dlg: "Ну всё, теперь Потапыч наш лучший внештатный дружинник на восточном секторе!" },
+        { title: "Зелёная аптека: Кора и Чага", cat: "Лесоохрана", targetType: "chaga", req: 2, xp: 130, coins: 95,
+          desc: "В Березовой роще на востоке срубите 2 нароста лечебной чаги (при этом сами березы остаются целыми!).",
+          dlg: "Отличная чага! Плотная, тёмная — хоть сейчас в аптекарский приказ отправляй." },
+        { title: "Салицин из ивовой коры", cat: "Лесоохрана", targetType: "bark", req: 2, xp: 135, coins: 100,
+          desc: "Аккуратно снимите 2 золотистых пласта коры со старых ив у речной излучины.",
+          dlg: "Чистая работа, камбий не поврежден, ивы продолжат зеленеть!" },
+        { title: "Варка таёжного бальзама", cat: "Крафт", targetType: "campfire", req: 1, xp: 150, coins: 110,
+          desc: "Подойдите к костровищу на кордоне и сварите в котелке согревающий бальзам.",
+          dlg: "Аромат на весь квартал! Кстати, у тебя уже хватит шишек на Моноколесо — загляни в Гараж [B]!" },
+        { title: "Незаконная плотина бобра Иннокентия", cat: "Юмор", targetType: "beaver_dam", req: 2, xp: 165, coins: 125,
+          desc: "Бобёр-подрядчик Иннокентий без разрешения Рослесхоза перекрыл ручей на юге (Z: 85). Разберите 2 самовольных завала и вручите предписание!",
+          dlg: "Говоришь, бобёр требовал показать ему кадастровый паспорт ручья?! Ну бюрократ хвостатый!" },
+        { title: "Ревизия квартальных столбов", cat: "Таксация", targetType: "pillar", req: 3, xp: 180, coins: 135,
+          desc: "Осмотрите и обновите краску на 3 полосатых квартальных столбах в лесу (используйте [1] Таксацию для ориентира).",
+          dlg: "Порядок в квартальной сети — основа лесоустройства! Столбы теперь видно за версту." },
+        { title: "Санитарный учёт короеда-типографа", cat: "Таксация", targetType: "sick_tree", req: 3, xp: 200, coins: 150,
+          desc: "В северо-западном ельнике найдите и отметьте синим клеймом 3 рыжие сухостойные ели. Осторожнее с диким шатуном!",
+          dlg: "Точный глаз! Координаты сухостоя переданы лесопатологам." },
+        { title: "Фотоловушки на тропе рыси", cat: "Наука", targetType: "camera_trap", req: 2, xp: 220, coins: 160,
+          desc: "Проверьте флеш-карты на 2 лесных фотоловушках, закрепленных на соснах.",
+          dlg: "Ого! На снимках не только рысь, но и лось, который чешет рога прямо об объектив!" },
+        { title: "Кукушка-паникёрша", cat: "Юмор", targetType: "camera_trap", req: 2, xp: 230, coins: 170,
+          desc: "Туристы жалуются, что кукушка в северном секторе накуковала им всего по полгода. Настройте 2 акустических маячка, чтобы сбить ей счётчик.",
+          dlg: "Ха-ха! Теперь кукует минимум до ста лет с пролонгацией!" },
+        { title: "Солонцы для сохатых", cat: "Биотехния", targetType: "salt_lick", req: 2, xp: 250, coins: 185,
+          desc: "Разложите каменную соль в 2 лесных кормушках-солонцах для подкормки лосей и косуль.",
+          dlg: "Зимой сохатые скажут тебе огромное лесное спасибо!" },
+        { title: "Шишкопад особого назначения", cat: "Селекция", targetType: "berry", req: 4, xp: 260, coins: 195,
+          desc: "Белка-завсклад устроила ревизию. Соберите 4 порции таёжной брусники для обменного фонда с пушным населением.",
+          dlg: "Белки довольны, взамен скинули нам с верхушек отборные кедровые шишки!" },
+        { title: "Потерянный теодолит практиканта", cat: "Юмор", targetType: "pillar", req: 2, xp: 280, coins: 210,
+          desc: "Практикант Илюха убежал от бурундука и забыл приборы у 2 квартальных столбов. Заберите оборудование.",
+          dlg: "Спасли казённое имущество! А то Илюха уверял, что бурундук был размером с росомаху." },
+        { title: "Реванш Потапыча в чапаева", cat: "Юмор", targetType: "checker_table", req: 1, xp: 300, coins: 230,
+          desc: "Медведь Потапыч выучил правила игры «в Чапаева» и вызывает вас за шашечный столик на восточной поляне!",
+          dlg: "Вот это щелбан! Последняя шашка Потапыча улетела прямо в малинник!" },
+        { title: "Лесной Wi-Fi для шишек", cat: "Юмор", targetType: "camera_trap", req: 3, xp: 320, coins: 250,
+          desc: "Переключите 3 лесных датчика телеметрии на зимнюю частоту, чтобы дятлы не принимали их за морзянку короедов.",
+          dlg: "Отлично! Дятлы прекратили долбить казённые антенны." },
+        { title: "Большой отвод лесосеки", cat: "Таксация", targetType: "sick_tree", req: 4, xp: 350, coins: 280,
+          desc: "Проведите клеймение 4 ветровальных и сухостойных деревьев для расчистки просеки.",
+          dlg: "С такой скоростью работы тебе пора присмотреться к УАЗику «Буханке» в гараже Петровича!" },
+        { title: "Таёжный ревизор (Юбилейный рубеж)", cat: "Сюжет", targetType: "pillar", req: 4, xp: 400, coins: 350,
+          desc: "Пройдите контрольный маршрут по 4 дальним квартальным столбам для закрытия ведомости первой двадцатки поручений.",
+          dlg: "Поздравляю, лесничий! Первая двадцатка позади. Впереди ещё 80 колоритных таёжных задач!" }
+    ];
 
-  // task system
-  let task = { active:false, name:"", seconds:0, left:0, kind:"" };
-  let taskTimer = null;
+    handcrafted.forEach(q => QUEST_LIST.push(q));
 
-  const excuseBoss = [
-    "Сейчас не время, пожароопасный сезон.",
-    "Давай после проверки… какой — не уточняли.",
-    "Бюджет заморожен, но ты держись.",
-    "Повышение? Конечно. В смысле — ответственности.",
-    "Мы вернёмся к этому вопросу после отчёта. После какого — угадай.",
-    "Надо потерпеть, зато у нас миссия.",
-    "Республика в курсе. Курс — на оптимизацию."
-  ];
+    // Генерируем квесты с 21 по 100 с чередованием юмористических сюжетов и серьёзных лесных задач
+    const templates = [
+        {
+            cat: "Юмор", targetType: "checker_table", req: 1,
+            titles: ["Турнир с Потапычем на щелбаны", "Сеанс одновременной игры в шашки", "Медвежий гамбит у пенька", "Шашечный финал Кубка Тайги"],
+            descs: ["Потапыч расставил шашки в два этажа и ждёт вас за лесным столиком. Покажите класс!", "Медведь утверждает, что прочитал книжку по стратегии. Сыграйте с ним партию за столиком."],
+            dlgs: ["Потапыч почесал затылок, признал ничью и подарил горсть золотых шишек!", "Такой комбинации даже в столичном лесхозе не видели!"]
+        },
+        {
+            cat: "Таксация", targetType: "pillar", req: 3,
+            titles: ["Инвентаризация дальнего выдела", "Геодезическая привязка квартала", "Проверка межевых знаков", "Точная таксация древостоя"],
+            descs: ["Сверьте азимуты и обновите отметки на 3 квартальных столбах в глубине тайги.", "Проведите инструментальную проверку 3 квартальных ориентиров."],
+            dlgs: ["Таксационное описание сошлось до миллиметра! Рослесхоз ставит отлично.", "Все координаты занесены в реестр лесничества."]
+        },
+        {
+            cat: "Юмор", targetType: "beaver_dam", req: 2,
+            titles: ["Бобровый небоскрёб без сметы", "Таможня на лесном ручье", "Снос бобрового пентхауса", "Акт осмотра гидроузла Иннокентия"],
+            descs: ["Бобры снова устроили гидротехнический самострой из осины. Разберите 2 запруды на ручье!", "Хвостатая бригада перегородила фарватер. Проведите демонтаж 2 бобровых плотин."],
+            dlgs: ["Бобёр Иннокентий подписал протокол отпечатком хвоста и обещал строить скромнее!", "Ручей снова журчит свободно!"]
+        },
+        {
+            cat: "Лесозащита", targetType: "sick_tree", req: 3,
+            titles: ["Локализация очага усача", "Санитарное клеймение сухостоя", "Фитосанитарный дозор", "Выявление ветровала в ельнике"],
+            descs: ["Найдите и отметьте 3 ослабленных дерева в хвойном секторе для санитарной рубки.", "Поставьте таксационное клеймо на 3 заражённых елях."],
+            dlgs: ["Очаг вредителей вовремя локализован. Вековой лес под надёжной защитой!", "Бригада лесорубов уже выехала по твоим меткам."]
+        },
+        {
+            cat: "Дикоросы", targetType: "mushroom", req: 4,
+            titles: ["Царский засол боровиков", "Грибная разведка после дождя", "Заготовка белых для зимовья", "Спор с грибником-теоретиком"],
+            descs: ["Отыщите в мшистых ельниках 4 крепких белых гриба первого сорта.", "Соберите 4 отборных боровика для продовольственного запаса кордона."],
+            dlgs: ["Ни одной червоточинки! В сушёном виде зимой на вес золота пойдут.", "Отменный сбор, вся кладовка пахнет тайгой!"]
+        },
+        {
+            cat: "Наука и Юмор", targetType: "camera_trap", req: 3,
+            titles: ["Селфи кабана на фотоловушку", "Учёт таёжных полуночников", "Калибровка лесных камер", "Кто таскает сгущёнку со склада?"],
+            descs: ["Снимите показания с 3 автоматических фотоловушек, развешанных в лесных кварталах.", "Проверьте 3 лесные камеры наблюдения и замените аккумуляторы."],
+            dlgs: ["Раскрыта тайна века: сгущёнку утащила росомаха в паре с сорокой!", "Кадры просто шедевральные — хоть на обложку журнала «Лесное хозяйство»!"]
+        },
+        {
+            cat: "Бортничество", targetType: "honey", req: 3,
+            titles: ["Золотой взяток диких пчёл", "Проверка таёжных бортей", "Мёд для следопытов", "Сладкий паёк лесоохраны"],
+            descs: ["Соберите 3 рамки душистого липового мёда из лесных колод.", "Осмотрите 3 бортевых улья и аккуратно заберите излишки мёда."],
+            dlgs: ["Янтарный, тягучий! Даже пчёлы не жужжали — знают своего лесничего.", "С таким запасом мёда нам никакие морозы не страшны!"]
+        },
+        {
+            cat: "Биотехния", targetType: "salt_lick", req: 3,
+            titles: ["Зимняя подкормка копытных", "Минеральный рацион для лосей", "Обновление лесных солонцов", "Забота о маралах"],
+            descs: ["Пополните запасы соли и веточного корма на 3 биотехнических солонцах.", "Осмотрите 3 лесных кормушки в дальних секторах."],
+            dlgs: ["Следы вокруг солонцов свежие — лоси уже оценили твою заботу!", "Биотехнический план квартала выполнен на 100%!"]
+        }
+    ];
 
-  const dayEvents = [
-    { tag:"warn", t:"Поступила термоточка. На карте выглядит маленькой, в жизни — ‘ну так’.", d:{fires:+1, morale:-3, rep:-1} },
-    { tag:"bad",  t:"Браконьеры ‘просто ехали’ и ‘ничего не делали’.", d:{poach:+1, morale:-4, complaints:+1, rep:-2} },
-    { tag:"warn", t:"Вызвали на совещание: ‘почему мало отчётов и много термоточек’.", d:{cringe:+6, morale:-2} },
-    { tag:"good", t:"Коллега помог закрыть участок. Бывает же.", d:{morale:+5, rep:+2} },
-    { tag:"warn", t:"Техника капризничает. ГСМ улетает.", d:{money:-900, morale:-2} },
-    { tag:"good", t:"Нашёл нормальный маршрут патруля — меньше пустых кругов.", d:{rep:+2, morale:+2} },
-    { tag:"bad",  t:"Прилетела жалоба: ‘лес не так стоит’.", d:{complaints:+1, cringe:+4, morale:-3} },
-  ];
+    for (let i = 21; i <= 100; i++) {
+        const tpl = templates[(i - 21) % templates.length];
+        const variantIdx = Math.floor((i - 21) / templates.length) % tpl.titles.length;
+        const descIdx = i % tpl.descs.length;
+        const dlgIdx = i % tpl.dlgs.length;
 
-  // ----- UI -----
-  const el = id => document.getElementById(id);
-  const ui = {
-    money: el("money"),
-    load: el("load"),
-    morale: el("morale"),
-    cringe: el("cringe"),
-    moraleBar: el("moraleBar"),
-    cringeBar: el("cringeBar"),
-    day: el("day"),
-    fires: el("fires"),
-    poach: el("poach"),
-    complaints: el("complaints"),
-    rep: el("rep"),
-    log: el("log"),
-    ach: el("ach"),
-    mute: el("mute"),
-    taskText: el("taskText"),
-    taskProg: el("taskProg"),
-  };
-
-  function clamp(n,a,b){ return Math.max(a, Math.min(b, n)); }
-  function fmt(n){ return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "); }
-
-  function logLine(tag, text){
-    const p = document.createElement("p");
-    const s = document.createElement("span");
-    s.className = "tag " + (tag||"info");
-    s.textContent = tag==="good" ? "успех" : tag==="bad" ? "жесть" : tag==="warn" ? "сезон" : "инфо";
-    p.appendChild(s);
-    p.appendChild(document.createTextNode(text));
-    ui.log.appendChild(p);
-    ui.log.scrollTop = ui.log.scrollHeight;
-  }
-
-  // ----- SOUND -----
-  let audioCtx;
-  function beep(freq=440, dur=0.06, type="sine", gain=0.04){
-    if(muted) return;
-    try{
-      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
-      const o = audioCtx.createOscillator();
-      const g = audioCtx.createGain();
-      o.type = type; o.frequency.value = freq; g.gain.value = gain;
-      o.connect(g); g.connect(audioCtx.destination);
-      o.start(); o.stop(audioCtx.currentTime + dur);
-    }catch(e){}
-  }
-
-  function update(){
-    ui.money.textContent = fmt(money);
-    ui.load.textContent = load.toFixed(2);
-    ui.morale.textContent = Math.round(morale);
-    ui.cringe.textContent = Math.round(cringe);
-    ui.day.textContent = day;
-    ui.fires.textContent = fires;
-    ui.poach.textContent = poach;
-    ui.complaints.textContent = complaints;
-    ui.rep.textContent = rep;
-    ui.ach.textContent = achievements;
-
-    ui.moraleBar.style.width = clamp(morale,0,100) + "%";
-    ui.cringeBar.style.width = clamp(cringe,0,100) + "%";
-
-    // task UI
-    if(!task.active){
-      ui.taskText.textContent = "Ничего не делается. Идеальный момент для нового поручения.";
-      ui.taskProg.style.width = "0%";
+        QUEST_LIST.push({
+            title: `${tpl.titles[variantIdx]} (#${i})`,
+            cat: tpl.cat,
+            targetType: tpl.targetType,
+            req: tpl.req + (i > 60 ? 1 : 0),
+            xp: 120 + i * 18,
+            coins: 90 + i * 14,
+            desc: tpl.descs[descIdx],
+            dlg: tpl.dlgs[dlgIdx]
+        });
     }
-  }
+}
+build100Quests();
 
-  function disableAll(v){
-    ["patrol","writeAct","closeFire","callWeekend","askRaise","endDay",
-     "buyFuel","buyRadio","buyZen","buyFolder","buyFace"].forEach(id => {
-      const b = el(id); if(b) b.disabled = v;
+// ==========================================
+// 3. ПРОЦЕДУРНЫЕ ТЕКСТУРЫ И СЦЕНА THREE.JS
+// ==========================================
+function createBirchTexture() {
+    const c = document.createElement('canvas'); c.width = 128; c.height = 256;
+    const ctx = c.getContext('2d');
+    ctx.fillStyle = '#ebe8df'; ctx.fillRect(0, 0, 128, 256);
+    ctx.fillStyle = '#262421'; ctx.fillRect(0, 215, 128, 41);
+    for (let i = 0; i < 55; i++) {
+        ctx.fillStyle = i % 3 === 0 ? '#6e6a61' : '#24221f';
+        ctx.fillRect(Math.random() * 128, Math.random() * 215, 10 + Math.random() * 25, 2 + Math.random() * 3);
+    }
+    return new THREE.CanvasTexture(c);
+}
+
+function createGroundTexture() {
+    const c = document.createElement('canvas'); c.width = 256; c.height = 256;
+    const ctx = c.getContext('2d');
+    ctx.fillStyle = '#334d2b'; ctx.fillRect(0, 0, 256, 256);
+    for (let i = 0; i < 1800; i++) {
+        ctx.fillStyle = Math.random() > 0.5 ? '#3d5c34' : '#294022';
+        ctx.fillRect(Math.random() * 256, Math.random() * 256, 3, 3);
+    }
+    const tex = new THREE.CanvasTexture(c);
+    tex.wrapS = THREE.RepeatWrapping; tex.wrapT = THREE.RepeatWrapping;
+    tex.repeat.set(70, 70);
+    return tex;
+}
+
+const birchTex = createBirchTexture();
+const groundTex = createGroundTexture();
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x88b399);
+scene.fog = new THREE.FogExp2(0x88b399, 0.0042);
+
+const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 420);
+const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)); // Оптимизация FPS на экранах высокого разрешения
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.06;
+document.body.appendChild(renderer.domElement);
+
+const hemiLight = new THREE.HemisphereLight(0xe6f7e8, 0x384a32, 0.78);
+scene.add(hemiLight);
+
+const dirLight = new THREE.DirectionalLight(0xffeacc, 1.15);
+dirLight.position.set(80, 130, 70);
+dirLight.castShadow = true;
+dirLight.shadow.mapSize.width = 2048;
+dirLight.shadow.mapSize.height = 2048;
+const d = 120;
+dirLight.shadow.camera.left = -d; dirLight.shadow.camera.right = d;
+dirLight.shadow.camera.top = d; dirLight.shadow.camera.bottom = -d;
+scene.add(dirLight);
+
+// Рельеф расширенного мира (640x640)
+function getTerrainHeight(x, z) {
+    const distFromCenter = Math.hypot(x, z);
+    if (distFromCenter < 26) return 0; // Ровная площадка Кордона и гаража
+    const factor = Math.min(1, (distFromCenter - 26) / 20);
+    return (Math.sin(x * 0.025) * Math.cos(z * 0.025) * 3.8 + Math.sin(x * 0.08 + z * 0.07) * 0.8) * factor;
+}
+
+const groundGeo = new THREE.PlaneGeometry(WORLD_SIZE, WORLD_SIZE, 96, 96);
+groundGeo.rotateX(-Math.PI / 2);
+const posAttr = groundGeo.attributes.position;
+for (let i = 0; i < posAttr.count; i++) {
+    posAttr.setY(i, getTerrainHeight(posAttr.getX(i), posAttr.getZ(i)));
+}
+groundGeo.computeVertexNormals();
+const groundMesh = new THREE.Mesh(groundGeo, new THREE.MeshStandardMaterial({ map: groundTex, roughness: 0.95 }));
+groundMesh.receiveShadow = true;
+scene.add(groundMesh);
+
+// ==========================================
+// 4. ДЕТАЛИЗИРОВАННЫЕ ЛИЦА (ГЛАЗА, НОС, РОТ, БРОВИ) И ПЕРСОНАЖИ
+// ==========================================
+const matCoat = new THREE.MeshStandardMaterial({ color: 0x2e5936, roughness: 0.7 });
+const matPack = new THREE.MeshStandardMaterial({ color: 0x80532a, roughness: 0.8 });
+const matHair = new THREE.MeshStandardMaterial({ color: 0x753020, roughness: 0.75 });
+const matSkin = new THREE.MeshStandardMaterial({ color: 0xf0c2a8, roughness: 0.55 });
+const matPants = new THREE.MeshStandardMaterial({ color: 0x263028, roughness: 0.85 });
+const matBoots = new THREE.MeshStandardMaterial({ color: 0x362214, roughness: 0.9 });
+
+// Универсальный конструктор выразительного лица (белки глаз, зрачки, брови, нос, рот/улыбка)
+function attachDetailedFace(headMesh, browMat, hasSmile = true) {
+    const scleraMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    const pupilMat = new THREE.MeshBasicMaterial({ color: 0x162418 });
+    const noseMat = new THREE.MeshStandardMaterial({ color: 0xe0a689, roughness: 0.6 });
+    const mouthMat = new THREE.MeshBasicMaterial({ color: 0x8f392c });
+
+    // Левый и правый глаз (белок + зрачок)
+    [-0.105, 0.105].forEach(ox => {
+        const sclera = new THREE.Mesh(new THREE.SphereGeometry(0.052, 12, 12), scleraMat);
+        sclera.scale.set(1.1, 0.95, 0.6);
+        sclera.position.set(ox, 0.045, 0.255);
+        headMesh.add(sclera);
+
+        const pupil = new THREE.Mesh(new THREE.SphereGeometry(0.028, 10, 10), pupilMat);
+        pupil.position.set(ox, 0.045, 0.288);
+        headMesh.add(pupil);
+
+        // Бровь над глазом
+        const brow = new THREE.Mesh(new THREE.BoxGeometry(0.095, 0.022, 0.03), browMat);
+        brow.position.set(ox, 0.115, 0.275);
+        brow.rotation.z = ox < 0 ? 0.08 : -0.08;
+        headMesh.add(brow);
     });
-  }
 
-  function gameOver(reason){
-    logLine("bad", reason);
-    logLine("warn","Игра окончена. Нажми «Новый месяц» и начни снова (или уйди в лес — по-настоящему).");
-    disableAll(true);
-    beep(180,0.12,"sawtooth",0.05);
-    beep(120,0.14,"sawtooth",0.05);
-  }
+    // Выступающий аккуратный нос посередине
+    const nose = new THREE.Mesh(new THREE.ConeGeometry(0.042, 0.11, 12), noseMat);
+    nose.rotation.x = Math.PI / 2 - 0.15;
+    nose.position.set(0, -0.01, 0.305);
+    headMesh.add(nose);
 
-  function win(reason){
-    logLine("good", reason);
-    logLine("good","Победа. Ты выжил(а) и не превратился(лась) в бумагу.");
-    disableAll(true);
-    beep(880,0.08,"triangle",0.06);
-    beep(990,0.10,"triangle",0.06);
-  }
-
-  function applyDelta(d){
-    if(!d) return;
-    if(d.money) money += d.money;
-    if(d.load) load = Math.max(1.00, load + d.load);
-    if(d.morale) morale += d.morale;
-    if(d.cringe) cringe += d.cringe;
-    if(d.fires) fires = Math.max(0, fires + d.fires);
-    if(d.poach) poach = Math.max(0, poach + d.poach);
-    if(d.complaints) complaints = Math.max(0, complaints + d.complaints);
-    if(d.rep) rep = clamp(rep + d.rep, 0, 100);
-
-    morale = clamp(morale,0,100);
-    cringe = clamp(cringe,0,100);
-  }
-
-  // ----- TASKS (60s progress for "close fire") -----
-  function startTask(name, seconds, kind){
-    if(task.active){
-      logLine("warn","Сначала закончи текущую задачу. Бумага не резиновая.");
-      beep(240,0.06,"sine");
-      return false;
-    }
-    task = {active:true, name, seconds, left:seconds, kind};
-    ui.taskText.textContent = `Задача: ${name} (осталось ${task.left} сек)`;
-    ui.taskProg.style.width = "0%";
-    const total = seconds;
-
-    taskTimer = setInterval(() => {
-      task.left--;
-      const done = total - task.left;
-      const pct = clamp((done/total)*100, 0, 100);
-      ui.taskProg.style.width = pct.toFixed(1) + "%";
-      ui.taskText.textContent = `Задача: ${name} (осталось ${task.left} сек)`;
-
-      if(task.left <= 0){
-        clearInterval(taskTimer); taskTimer = null;
-        finishTask();
-      }
-    }, 1000);
-
-    beep(520,0.05,"triangle",0.05);
-    return true;
-  }
-
-  function finishTask(){
-    if(!task.active) return;
-    const kind = task.kind;
-    task.active = false;
-
-    if(kind === "closeFire"){
-      if(fires > 0){
-        fires -= 1;
-        rep = clamp(rep + 4, 0, 100);
-        morale = clamp(morale + 3, 0, 100);
-        logLine("good","Термоточка закрыта. На карте стало на одну красную точку меньше. Душе тоже легче.");
-        beep(740,0.06,"triangle",0.06);
-      } else {
-        logLine("warn","Ты героически закрывал термоточку… которой уже не было. Кринж.");
-        cringe = clamp(cringe + 6, 0, 100);
-        beep(200,0.08,"sawtooth",0.05);
-      }
-    }
-
-    if(kind === "act"){
-      // writing acts reduces complaints chance and helps with inspections
-      rep = clamp(rep + 2, 0, 100);
-      morale = clamp(morale + 1, 0, 100);
-      if(complaints > 0 && Math.random() < (hasFolder ? 0.65 : 0.45)){
-        complaints -= 1;
-        logLine("good","Акт принят. Минус одна жалоба, плюс одна подпись.");
-        beep(720,0.06,"triangle",0.05);
-      } else {
-        logLine("info","Акт написан. Бумага стала толще. Жизнь — нет.");
-        beep(520,0.05,"sine",0.04);
-      }
-    }
-
-    update();
-    if(cringe >= 100) gameOver("Кринж достиг 100. Тебя назначили ответ. за ‘улучшение процессов’.");
-    if(morale <= 0) gameOver("Мораль закончилась. Ты ушёл в тайгу и растворился в тумане.");
-  }
-
-  // ----- ACTIONS -----
-  function patrol(){
-    // Patrol can reduce fires/poach chance or raise rep; costs money (fuel).
-    const fuelCost = Math.round((650 + Math.random()*300) * load);
-    money -= fuelCost;
-    morale -= 1.5;
-    logLine("info", `Патруль. Минус ${fmt(fuelCost)} ₽ на ГСМ. Ветер в лицо, отчёт в спину.`);
-
-    let successChance = 0.45 + (hasRadio ? 0.12 : 0) - (load-1)*0.08;
-    successChance = clamp(successChance, 0.15, 0.75);
-
-    const roll = Math.random();
-    if(roll < successChance){
-      // good find
-      if(Math.random() < 0.5 && fires > 0){
-        fires -= 1;
-        rep += 3; morale += 2;
-        logLine("good","Нашёл и локализовал термоточку раньше, чем она стала ‘событием’. Минус 1 термоточка.");
-      } else if(poach > 0){
-        poach -= 1;
-        rep += 4; morale += 1;
-        logLine("good","Поймал браконьеров на горячем (почти). Минус 1 браконьерская история.");
-      } else {
-        rep += 3; morale += 2;
-        logLine("good","Патруль без ЧП. Это редкость. Репутация растёт.");
-      }
-      beep(720,0.06,"triangle",0.06);
+    // Выразительный рот / улыбка
+    if (hasSmile) {
+        const mouth = new THREE.Mesh(new THREE.TorusGeometry(0.065, 0.015, 8, 16, Math.PI), mouthMat);
+        mouth.rotation.x = Math.PI + 0.15;
+        mouth.position.set(0, -0.085, 0.272);
+        headMesh.add(mouth);
     } else {
-      // bad outcome
-      cringe += 3; morale -= 2;
-      if(Math.random() < 0.6) { fires += 1; logLine("warn","Пока ты ехал — появилась новая термоточка. Лол."); }
-      else { complaints += 1; logLine("bad","Кто-то снял видео ‘почему вы не там’. Жалоба +1."); }
-      beep(180,0.08,"sawtooth",0.05);
+        const mouth = new THREE.Mesh(new THREE.BoxGeometry(0.11, 0.024, 0.03), mouthMat);
+        mouth.position.set(0, -0.095, 0.275);
+        headMesh.add(mouth);
+    }
+}
+
+function createSmoothLimb(radiusTop, radiusBottom, length, mainMat, tipMat, isLeg) {
+    const pivot = new THREE.Group();
+    const shaft = new THREE.Mesh(new THREE.CylinderGeometry(radiusTop, radiusBottom, length, 14), mainMat);
+    shaft.position.y = -length / 2;
+    shaft.castShadow = true;
+    pivot.add(shaft);
+
+    const jointTop = new THREE.Mesh(new THREE.SphereGeometry(radiusTop * 1.02, 12, 12), mainMat);
+    pivot.add(jointTop);
+
+    if (isLeg) {
+        const boot = new THREE.Mesh(new THREE.SphereGeometry(radiusBottom * 1.25, 12, 12), tipMat);
+        boot.scale.set(0.95, 0.7, 1.45);
+        boot.position.set(0, -length, 0.08);
+        boot.castShadow = true;
+        pivot.add(boot);
+    } else {
+        const hand = new THREE.Mesh(new THREE.SphereGeometry(radiusBottom * 1.08, 10, 10), tipMat);
+        hand.position.set(0, -length, 0);
+        pivot.add(hand);
+    }
+    return pivot;
+}
+
+// Сборка главного героя + контейнер для 3D-маунтов
+const playerGroup = new THREE.Group();
+scene.add(playerGroup);
+
+const humanModel = new THREE.Group();
+playerGroup.add(humanModel);
+
+const leftLeg = createSmoothLimb(0.17, 0.14, 0.78, matPants, matBoots, true);
+leftLeg.position.set(-0.21, 0.82, 0);
+const rightLeg = createSmoothLimb(0.17, 0.14, 0.78, matPants, matBoots, true);
+rightLeg.position.set(0.21, 0.82, 0);
+
+const torso = new THREE.Mesh(new THREE.CylinderGeometry(0.36, 0.41, 0.96, 18), matCoat);
+torso.scale.set(1.08, 1, 0.76);
+torso.position.set(0, 1.28, 0);
+torso.castShadow = true;
+
+const shoulders = new THREE.Mesh(new THREE.SphereGeometry(0.41, 16, 14), matCoat);
+shoulders.scale.set(1.12, 0.45, 0.76);
+shoulders.position.set(0, 1.72, 0);
+
+const collar = new THREE.Mesh(new THREE.TorusGeometry(0.22, 0.065, 10, 20), matPack);
+collar.rotation.x = Math.PI / 2;
+collar.position.set(0, 1.82, 0);
+
+const backpackGroup = new THREE.Group();
+const packBody = new THREE.Mesh(new THREE.CylinderGeometry(0.29, 0.31, 0.68, 14), matPack);
+packBody.scale.set(1.1, 1, 0.75);
+const matRoll = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.11, 0.68, 12), new THREE.MeshStandardMaterial({ color: 0xd4a24c }));
+matRoll.rotation.z = Math.PI / 2;
+matRoll.position.set(0, 0.44, -0.02);
+backpackGroup.add(packBody, matRoll);
+backpackGroup.position.set(0, 1.38, -0.34);
+
+const headGroup = new THREE.Group();
+headGroup.position.set(0, 2.14, 0);
+const headMesh = new THREE.Mesh(new THREE.SphereGeometry(0.29, 20, 20), matSkin);
+headMesh.scale.set(0.96, 1.05, 0.96);
+headMesh.castShadow = true;
+attachDetailedFace(headMesh, matHair, true); // Добавляем глаза, нос, брови и рот герою!
+
+const beanieDome = new THREE.Mesh(new THREE.SphereGeometry(0.305, 18, 14, 0, Math.PI * 2, 0, Math.PI * 0.58), matHair);
+beanieDome.position.y = 0.06;
+beanieDome.rotation.x = -0.22;
+const beanieRim = new THREE.Mesh(new THREE.TorusGeometry(0.28, 0.05, 10, 20), matHair);
+beanieRim.rotation.x = Math.PI / 2 - 0.22;
+beanieRim.position.y = 0.14;
+headGroup.add(headMesh, beanieDome, beanieRim);
+
+const leftArm = createSmoothLimb(0.13, 0.105, 0.72, matCoat, matSkin, false);
+leftArm.position.set(-0.48, 1.68, 0);
+const rightArm = createSmoothLimb(0.13, 0.105, 0.72, matCoat, matSkin, false);
+rightArm.position.set(0.48, 1.68, 0);
+
+humanModel.add(leftLeg, rightLeg, torso, shoulders, collar, backpackGroup, headGroup, leftArm, rightArm);
+
+// 3D-МОДЕЛИ 4 МАУНТОВ (Моноколесо, Квадроцикл, УАЗ Буханка, Вертолёт)
+const mountVisualsGroup = new THREE.Group();
+playerGroup.add(mountVisualsGroup);
+let heliRotorMesh = null;
+
+function buildMountMeshes() {
+    const tireMat = new THREE.MeshStandardMaterial({ color: 0x1c1e1c, roughness: 0.9 });
+    const metalMat = new THREE.MeshStandardMaterial({ color: 0x8a948e, metalness: 0.6, roughness: 0.4 });
+    const oliveMat = new THREE.MeshStandardMaterial({ color: 0x3b5933, roughness: 0.6 });
+    const orangeMat = new THREE.MeshStandardMaterial({ color: 0xd96b27, roughness: 0.5 });
+    const glassMat = new THREE.MeshStandardMaterial({ color: 0x99d6ea, transparent: true, opacity: 0.65, roughness: 0.1 });
+
+    // 1. Моноколесо
+    const mono = new THREE.Group();
+    const mwWheel = new THREE.Mesh(new THREE.TorusGeometry(0.42, 0.14, 12, 24), tireMat);
+    mwWheel.rotation.y = Math.PI / 2;
+    mwWheel.position.y = 0.52;
+    const mwCase = new THREE.Mesh(new THREE.CylinderGeometry(0.38, 0.38, 0.26, 16), orangeMat);
+    mwCase.rotation.z = Math.PI / 2;
+    mwCase.position.y = 0.58;
+    const mwPedals = new THREE.Mesh(new THREE.BoxGeometry(0.68, 0.06, 0.32), metalMat);
+    mwPedals.position.y = 0.28;
+    mono.add(mwWheel, mwCase, mwPedals);
+    mono.visible = false;
+    mono.userData.mountId = 'monowheel';
+
+    // 2. Квадроцикл
+    const atv = new THREE.Group();
+    const atvBody = new THREE.Mesh(new THREE.BoxGeometry(1.25, 0.55, 2.1), orangeMat);
+    atvBody.position.y = 0.72;
+    const handle = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.95, 8), metalMat);
+    handle.rotation.z = Math.PI / 2;
+    handle.position.set(0, 1.25, 0.55);
+    [[-0.65, 0.75], [0.65, 0.75], [-0.65, -0.75], [0.65, -0.75]].forEach(([wx, wz]) => {
+        const w = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.42, 0.32, 14), tireMat);
+        w.rotation.z = Math.PI / 2;
+        w.position.set(wx, 0.42, wz);
+        atv.add(w);
+    });
+    atv.add(atvBody, handle);
+    atv.visible = false;
+    atv.userData.mountId = 'atv';
+
+    // 3. УАЗ-452 «Буханка»
+    const uaz = new THREE.Group();
+    const uazHull = new THREE.Mesh(new THREE.BoxGeometry(1.95, 1.55, 3.8), oliveMat);
+    uazHull.position.y = 1.25;
+    uazHull.castShadow = true;
+    const uazRoof = new THREE.Mesh(new THREE.CylinderGeometry(0.95, 0.98, 3.76, 16), new THREE.MeshStandardMaterial({ color: 0xd9d6c5 }));
+    uazRoof.rotation.x = Math.PI / 2;
+    uazRoof.scale.y = 0.25;
+    uazRoof.position.y = 2.02;
+    const windshield = new THREE.Mesh(new THREE.PlaneGeometry(1.65, 0.65), glassMat);
+    windshield.position.set(0, 1.55, 1.91);
+    // Круглые фары Буханки
+    [-0.62, 0.62].forEach(lx => {
+        const hl = new THREE.Mesh(new THREE.SphereGeometry(0.16, 12, 12), new THREE.MeshBasicMaterial({ color: 0xfff5b8 }));
+        hl.position.set(lx, 1.05, 1.9);
+        uaz.add(hl);
+    });
+    [[-0.98, 1.15], [0.98, 1.15], [-0.98, -1.15], [0.98, -1.15]].forEach(([wx, wz]) => {
+        const w = new THREE.Mesh(new THREE.CylinderGeometry(0.48, 0.48, 0.34, 16), tireMat);
+        w.rotation.z = Math.PI / 2;
+        w.position.set(wx, 0.48, wz);
+        uaz.add(w);
+    });
+    uaz.add(uazHull, uazRoof, windshield);
+    uaz.visible = false;
+    uaz.userData.mountId = 'uaz';
+
+    // 4. Лесопатрульный Вертолёт
+    const heli = new THREE.Group();
+    const cabin = new THREE.Mesh(new THREE.SphereGeometry(1.15, 18, 16), orangeMat);
+    cabin.scale.set(0.95, 0.9, 1.45);
+    cabin.position.y = 1.45;
+    const canopy = new THREE.Mesh(new THREE.SphereGeometry(1.08, 16, 14), glassMat);
+    canopy.position.set(0, 1.52, 0.42);
+    const tailBoom = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.28, 3.2, 12), orangeMat);
+    tailBoom.rotation.x = Math.PI / 2;
+    tailBoom.position.set(0, 1.55, -2.4);
+    // Лыжи-шасси
+    [-0.75, 0.75].forEach(sx => {
+        const skid = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 2.8, 10), metalMat);
+        skid.rotation.x = Math.PI / 2;
+        skid.position.set(sx, 0.15, 0);
+        heli.add(skid);
+    });
+    // Несущий винт
+    const rotorGroup = new THREE.Group();
+    rotorGroup.position.set(0, 2.65, 0);
+    const b1 = new THREE.Mesh(new THREE.BoxGeometry(5.6, 0.04, 0.28), tireMat);
+    const b2 = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.04, 5.6), tireMat);
+    rotorGroup.add(b1, b2);
+    heliRotorMesh = rotorGroup;
+
+    heli.add(cabin, canopy, tailBoom, rotorGroup);
+    heli.visible = false;
+    heli.userData.mountId = 'heli';
+
+    mountVisualsGroup.add(mono, atv, uaz, heli);
+}
+buildMountMeshes();
+
+playerGroup.position.set(0, 0, 10);
+
+function updateHeroColors() {
+    matCoat.color.set(document.getElementById('col-coat').value);
+    matPack.color.set(document.getElementById('col-pack').value);
+    matHair.color.set(document.getElementById('col-hair').value);
+}
+
+// 3D-стрелка компаса над героем к текущей квестовой цели
+const questArrow = new THREE.Group();
+const arrCone = new THREE.Mesh(new THREE.ConeGeometry(0.28, 0.75, 12), new THREE.MeshBasicMaterial({ color: 0xffd84d }));
+arrCone.rotation.x = Math.PI / 2;
+arrCone.position.z = 0.35;
+questArrow.add(arrCone);
+questArrow.position.y = 3.25;
+playerGroup.add(questArrow);
+
+const targetRing = new THREE.Mesh(
+    new THREE.RingGeometry(0.95, 1.3, 32),
+    new THREE.MeshBasicMaterial({ color: 0xf5d77f, side: THREE.DoubleSide })
+);
+targetRing.rotation.x = -Math.PI / 2;
+targetRing.visible = false;
+scene.add(targetRing);
+
+// ==========================================
+// 5. МИР: ОПТИМИЗИРОВАННЫЙ ЛЕС (INSTANCED MESH), NPC С НОГАМИ И КВЕСТОВЫЕ ТОЧКИ
+// ==========================================
+const interactables = [];
+const treeColliders = [];
+let selectedObject = null;
+
+// Сторожка и Гараж на кордоне
+function buildCordonBuildings() {
+    const woodMat = new THREE.MeshStandardMaterial({ color: 0x6e4726, roughness: 0.85 });
+    const roofMat = new THREE.MeshStandardMaterial({ color: 0x3b2616, roughness: 0.9 });
+
+    // Сторожка Кузьмича
+    const cabin = new THREE.Group();
+    const walls = new THREE.Mesh(new THREE.BoxGeometry(8, 4.2, 6.5), woodMat);
+    walls.position.y = 2.1; walls.castShadow = true;
+    const roof = new THREE.Mesh(new THREE.ConeGeometry(6.4, 3.4, 4), roofMat);
+    roof.position.y = 5.8; roof.rotation.y = Math.PI / 4;
+    cabin.add(walls, roof);
+    cabin.position.set(0, 0, -10);
+    scene.add(cabin);
+    treeColliders.push({ x: 0, z: -10, r: 4.6 });
+
+    // Навес-Гараж Петровича
+    const garage = new THREE.Group();
+    const gWalls = new THREE.Mesh(new THREE.BoxGeometry(7.5, 3.8, 6.0), new THREE.MeshStandardMaterial({ color: 0x4b574e }));
+    gWalls.position.y = 1.9; gWalls.castShadow = true;
+    garage.add(gWalls);
+    garage.position.set(13, 0, -6);
+    scene.add(garage);
+    treeColliders.push({ x: 13, z: -6, r: 4.2 });
+}
+buildCordonBuildings();
+
+// Универсальная функция создания полноценного NPC (с ногами, руками и лицом!)
+function createFullNpc(x, z, coatHex, hatHex, hasBeard, name, sub, npcType) {
+    const npc = new THREE.Group();
+    const coatM = new THREE.MeshStandardMaterial({ color: coatHex, roughness: 0.75 });
+    const hatM = new THREE.MeshStandardMaterial({ color: hatHex, roughness: 0.8 });
+    const beardM = new THREE.MeshStandardMaterial({ color: 0xd4d4d4, roughness: 0.85 });
+
+    // Полноценные ноги в сапогах (Исправлено замечание!)
+    const legL = createSmoothLimb(0.17, 0.14, 0.78, matPants, matBoots, true);
+    legL.position.set(-0.21, 0.82, 0);
+    const legR = createSmoothLimb(0.17, 0.14, 0.78, matPants, matBoots, true);
+    legR.position.set(0.21, 0.82, 0);
+
+    // Торс и руки
+    const body = new THREE.Mesh(new THREE.CylinderGeometry(0.38, 0.43, 1.0, 16), coatM);
+    body.position.y = 1.30; body.castShadow = true;
+    const armL = createSmoothLimb(0.13, 0.105, 0.70, coatM, matSkin, false);
+    armL.position.set(-0.48, 1.66, 0);
+    const armR = createSmoothLimb(0.13, 0.105, 0.70, coatM, matSkin, false);
+    armR.position.set(0.48, 1.66, 0);
+
+    // Голова с глазами, носом, бровями и ртом
+    const head = new THREE.Mesh(new THREE.SphereGeometry(0.29, 18, 18), matSkin);
+    head.position.y = 2.12;
+    attachDetailedFace(head, beardM, true);
+
+    if (hasBeard) {
+        const beard = new THREE.Mesh(new THREE.SphereGeometry(0.24, 14, 12), beardM);
+        beard.scale.set(1.0, 1.15, 0.7);
+        beard.position.set(0, 1.92, 0.12);
+        npc.add(beard);
     }
 
-    morale = clamp(morale,0,100);
-    cringe = clamp(cringe,0,100);
-    rep = clamp(rep,0,100);
-    update();
+    const hatBrim = new THREE.Mesh(new THREE.CylinderGeometry(0.45, 0.45, 0.06, 16), hatM);
+    hatBrim.position.y = 2.34;
+    const hatTop = new THREE.Mesh(new THREE.CylinderGeometry(0.26, 0.32, 0.28, 14), hatM);
+    hatTop.position.y = 2.48;
 
-    if(money < 0) gameOver("Деньги ушли в минус. Ты стал ‘волонтёром леса’.");
-  }
+    // Восклицательный знак
+    const exclaimGroup = new THREE.Group();
+    const exMat = new THREE.MeshBasicMaterial({ color: 0xffd93b });
+    const bar = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.08, 0.65, 10), exMat);
+    bar.position.y = 3.45;
+    const dot = new THREE.Mesh(new THREE.SphereGeometry(0.12, 10, 10), exMat);
+    dot.position.y = 2.92;
+    exclaimGroup.add(bar, dot);
 
-  function writeAct(){
-    const secs = hasFolder ? 35 : 60;
-    startTask("Пишем акт (бумага любит всё)", secs, "act");
-  }
+    npc.add(legL, legR, body, armL, armR, head, hatBrim, hatTop, exclaimGroup);
+    npc.position.set(x, getTerrainHeight(x, z), z);
+    scene.add(npc);
 
-  function closeFire(){
-    if(fires <= 0){
-      logLine("warn","Термоточек нет. Но ты можешь создать одну отчётом (шутка).");
-      beep(240,0.06,"sine");
-      return;
+    npc.userData = { type: npcType, name, sub, exclaim: exclaimGroup, active: true };
+    interactables.push(npc);
+    treeColliders.push({ x, z, r: 0.85 });
+}
+
+// Создаём Кузьмича и Механика Петровича
+createFullNpc(2.8, -3.2, 0x4b5c34, 0x2c381e, true, 'Старший егерь Кузьмич', 'Выдача и приём 100 поручений', 'npc_kuzmich');
+createFullNpc(9.2, -3.0, 0x2c4a63, 0xd96b27, false, 'Механик Петрович', 'Гараж транспорта [B]', 'npc_mechanic');
+
+// Костровище
+function createCampfire(x, z) {
+    const group = new THREE.Group();
+    const flame = new THREE.Mesh(new THREE.ConeGeometry(0.55, 1.4, 12), new THREE.MeshBasicMaterial({ color: 0xff771c }));
+    flame.position.y = 0.7;
+    const light = new THREE.PointLight(0xff8c3b, 1.6, 15);
+    light.position.y = 1.5;
+    group.add(flame, light);
+    group.position.set(x, getTerrainHeight(x, z), z);
+    scene.add(group);
+    group.userData = { type: 'campfire', name: 'Костровище с котелком', sub: 'Варка целебных бальзамов', active: true, flameMesh: flame };
+    interactables.push(group);
+}
+createCampfire(-4.2, -2.5);
+
+// Культурный Медведь Потапыч за шашечным столиком (Для юмористических квестов!)
+function createCheckersBearSpot(x, z) {
+    const grp = new THREE.Group();
+    const y = getTerrainHeight(x, z);
+
+    // Столик-пенёк с шашечной доской
+    const stump = new THREE.Mesh(new THREE.CylinderGeometry(0.85, 0.95, 0.95, 14), new THREE.MeshStandardMaterial({ color: 0x6e4726 }));
+    stump.position.y = 0.48;
+    const board = new THREE.Mesh(new THREE.BoxGeometry(0.95, 0.08, 0.95), new THREE.MeshStandardMaterial({ color: 0xe8d8b0 }));
+    board.position.y = 0.98;
+    grp.add(stump, board);
+
+    // Дружелюбный медведь Потапыч в фуражке с глазами и носом
+    const furMat = new THREE.MeshStandardMaterial({ color: 0x4a2e1b, roughness: 0.9 });
+    const bBody = new THREE.Mesh(new THREE.SphereGeometry(0.85, 16, 14), furMat);
+    bBody.scale.set(1, 1.15, 0.9);
+    bBody.position.set(0, 1.0, -1.35);
+    const bHead = new THREE.Mesh(new THREE.SphereGeometry(0.52, 16, 14), furMat);
+    bHead.position.set(0, 1.95, -1.25);
+    attachDetailedFace(bHead, furMat, true);
+    grp.add(bBody, bHead);
+
+    grp.position.set(x, y, z);
+    scene.add(grp);
+    grp.userData = { type: 'checker_table', name: 'Шашечный столик Потапыча', sub: 'Сыграть партию с медведем [F]', active: true };
+    interactables.push(grp);
+    treeColliders.push({ x, z, r: 1.5 });
+}
+createCheckersBearSpot(55, 30);
+
+// ОПТИМИЗИРОВАННЫЙ ЛЕС ЧЕРЕЗ INSTANCED MESH (600+ деревьев без падения FPS!)
+function buildOptimizedForest() {
+    const countPines = 280;
+    const countBirches = 180;
+    const dummy = new THREE.Object3D();
+
+    // 1. Хвойные деревья (стволы + кроны в 2 InstancedMesh)
+    const pineTrunkGeo = new THREE.CylinderGeometry(0.28, 0.46, 3.8, 8);
+    pineTrunkGeo.translate(0, 1.9, 0);
+    const pineCrownGeo = new THREE.ConeGeometry(2.3, 6.8, 10);
+    pineCrownGeo.translate(0, 5.2, 0);
+
+    const instPineTrunks = new THREE.InstancedMesh(pineTrunkGeo, new THREE.MeshStandardMaterial({ color: 0x4a321e, roughness: 0.9 }), countPines);
+    const instPineCrowns = new THREE.InstancedMesh(pineCrownGeo, new THREE.MeshStandardMaterial({ color: 0x244a26, roughness: 0.85 }), countPines);
+    instPineTrunks.castShadow = true; instPineCrowns.castShadow = true;
+
+    for (let i = 0; i < countPines; i++) {
+        let x = 0, z = 0;
+        while (Math.hypot(x, z) < 28 || Math.hypot(x - 55, z - 30) < 10) {
+            x = (Math.random() - 0.5) * (WORLD_SIZE - 40);
+            z = (Math.random() - 0.5) * (WORLD_SIZE - 40);
+        }
+        const y = getTerrainHeight(x, z);
+        const sc = 0.85 + Math.random() * 0.65;
+        dummy.position.set(x, y, z);
+        dummy.scale.set(sc, sc, sc);
+        dummy.rotation.y = Math.random() * Math.PI;
+        dummy.updateMatrix();
+        instPineTrunks.setMatrixAt(i, dummy.matrix);
+        instPineCrowns.setMatrixAt(i, dummy.matrix);
+        treeColliders.push({ x, z, r: 0.7 });
     }
-    startTask("Закрываем термоточку (прогресс 60 сек)", 60, "closeFire");
-  }
+    scene.add(instPineTrunks, instPineCrowns);
 
-  function callWeekend(){
-    // Helps reduce load a bit but increases cringe; costs money sometimes.
-    const cost = 900 + Math.random()*900;
-    money -= Math.round(cost);
-    load = Math.max(1.00, load - 0.06);
-    cringe += 6;
-    morale += 2;
-    logLine("warn","Вызвал людей в выходной. Минус деньги, плюс кринж, но нагрузка чуть падает.");
-    beep(420,0.06,"square",0.05);
-    update();
-  }
+    // 2. Белоствольные берёзы (стволы с берестой + кроны в 2 InstancedMesh)
+    const birchTrunkGeo = new THREE.CylinderGeometry(0.22, 0.35, 5.4, 8);
+    birchTrunkGeo.translate(0, 2.7, 0);
+    const birchCrownGeo = new THREE.SphereGeometry(2.1, 10, 10);
+    birchCrownGeo.translate(0, 6.0, 0);
 
-  function askRaise(){
-    // Chance depends on rep and complaints; low base. Higher load hurts.
-    const base = 0.04;
-    const repBoost = (rep/100)*0.10;     // up to +10%
-    const compPenalty = (complaints*0.03); // -3% each
-    const loadPenalty = (load-1)*0.12;
-    const cringePenalty = cringe/250;
-    let chance = base + repBoost - compPenalty - loadPenalty - cringePenalty;
-    chance = clamp(chance, 0.01, 0.20);
+    const instBirchTrunks = new THREE.InstancedMesh(birchTrunkGeo, new THREE.MeshStandardMaterial({ map: birchTex, roughness: 0.75 }), countBirches);
+    const instBirchCrowns = new THREE.InstancedMesh(birchCrownGeo, new THREE.MeshStandardMaterial({ color: 0x62963b, roughness: 0.82 }), countBirches);
+    instBirchTrunks.castShadow = true; instBirchCrowns.castShadow = true;
 
-    const roll = Math.random();
-    if(roll < chance){
-      const raise = Math.round(1500 + Math.random()*2500);
-      money += raise;
-      morale += 10;
-      cringe -= 8;
-      achievements++;
-      logLine("good", `ЛЕГЕНДАРНО: тебе подняли выплату на +${fmt(raise)} ₽. И добавили KPI ‘любить отчёты’.`);
-      beep(880,0.08,"triangle",0.06);
-      win("Ты выбил повышение. Поверить сложно, но бухгалтерия уже плачет.");
-      return;
+    for (let i = 0; i < countBirches; i++) {
+        let x = 0, z = 0;
+        while (Math.hypot(x, z) < 28 || Math.hypot(x - 55, z - 30) < 10) {
+            x = (Math.random() - 0.5) * (WORLD_SIZE - 40);
+            z = (Math.random() - 0.5) * (WORLD_SIZE - 40);
+        }
+        const y = getTerrainHeight(x, z);
+        const sc = 0.85 + Math.random() * 0.55;
+        dummy.position.set(x, y, z);
+        dummy.scale.set(sc, sc, sc);
+        dummy.updateMatrix();
+        instBirchTrunks.setMatrixAt(i, dummy.matrix);
+        instBirchCrowns.setMatrixAt(i, dummy.matrix);
+        treeColliders.push({ x, z, r: 0.65 });
     }
-    const ex = excuseBoss[Math.floor(Math.random()*excuseBoss.length)];
-    cringe += 7 + Math.random()*5;
-    morale -= 4 + Math.random()*5;
-    logLine("warn", `Ты попросил повышение. Ответ: «${ex}»`);
-    if(Math.random() < 0.35){
-      complaints += 1;
-      logLine("bad", "И бонусом: ‘а давай-ка ты ещё и отчёт за соседний участок’ (жалоба +1).");
-    }
-    beep(200,0.08,"sawtooth",0.05);
-    update();
-    if(cringe >= 100) gameOver("Кринж достиг 100. Тебя назначили ответственным за ‘мотивацию коллектива’.");
-    if(morale <= 0) gameOver("Мораль исчезла. Ты ушёл в лес и стал легендой.");
-  }
+    scene.add(instBirchTrunks, instBirchCrowns);
+}
+buildOptimizedForest();
 
-  // ----- DAY PROGRESSION -----
-  function dailyLivingCost(){
-    // Costs scale with load and complaints (нервы/штрафы/бумага)
-    const base = 900 + (complaints*120) + (fires*90);
-    return Math.round(base * load);
-  }
+// Генерация всех видов интерактивных объектов для 100 квестов
+function spawnAllWorldInteractables() {
+    const typesConfig = [
+        { type: 'mushroom', name: 'Белый гриб (Боровик)', sub: 'Ценный дикорос', count: 35 },
+        { type: 'berry', name: 'Куст таёжной брусники', sub: 'Таёжная ягода', count: 30 },
+        { type: 'bark', name: 'Старая ива (Лечебная кора)', sub: 'Дерево остаётся, снимается только кора', count: 22 },
+        { type: 'chaga', name: 'Берёза с наростом Чаги', sub: 'Дерево остаётся, срубается только чага', count: 22 },
+        { type: 'honey', name: 'Бортевой улей (Липовый мёд)', sub: 'Душистый таёжный мёд', count: 20 },
+        { type: 'pillar', name: 'Квартальный столб', sub: 'Ориентир лесоустройства', count: 22 },
+        { type: 'sick_tree', name: 'Сухостойная ель (Короед)', sub: 'Объект санитарной таксации', count: 22 },
+        { type: 'beaver_dam', name: 'Самовольная плотина бобра', sub: 'Требуется разбор завала', count: 16 },
+        { type: 'camera_trap', name: 'Лесная фотоловушка', sub: 'Мониторинг редких зверей', count: 18 },
+        { type: 'salt_lick', name: 'Биотехнический солонец', sub: 'Кормушка для лосей и косуль', count: 18 }
+    ];
 
-  function randomDayEvent(){
-    // Probability scales with load
-    const picks = Math.random() < 0.82 ? 1 : 0;
-    if(!picks){
-      logLine("info","День прошёл тихо. Это подозрительно.");
-      return;
-    }
-    const ev = dayEvents[Math.floor(Math.random()*dayEvents.length)];
-    logLine(ev.tag, ev.t);
-    applyDelta(ev.d);
-  }
+    typesConfig.forEach(cfg => {
+        for (let i = 0; i < cfg.count; i++) {
+            let x = 0, z = 0;
+            const maxSpread = i < 6 ? 110 : (WORLD_SIZE * 0.44); // Первые объекты ближе к кордону, остальные по всей карте
+            while (Math.hypot(x, z) < 20) {
+                x = (Math.random() - 0.5) * maxSpread * 2;
+                z = (Math.random() - 0.5) * maxSpread * 2;
+            }
+            createInteractableNode(cfg.type, cfg.name, cfg.sub, x, z);
+        }
+    });
+}
 
-  function inspectionChance(){
-    // If complaints high -> inspection likely
-    const p = clamp(0.06 + complaints*0.06 + (load-1)*0.08, 0.05, 0.55);
-    return p;
-  }
+function createInteractableNode(type, name, sub, x, z) {
+    const y = getTerrainHeight(x, z);
+    const grp = new THREE.Group();
+    let harvestVisual = null;
 
-  function endDay(){
-    // can't end while task active? allow, but penalize
-    if(task.active){
-      logLine("bad","Ты ушёл в конец дня с незакрытой задачей. Бумага тебя догонит.");
-      morale -= 6; cringe += 6;
-      // cancel task
-      clearInterval(taskTimer); taskTimer = null;
-      task.active = false;
-      ui.taskProg.style.width = "0%";
-    }
-
-    // expenses
-    const cost = dailyLivingCost();
-    money -= cost;
-
-    // load growth (season pressure)
-    let loadGrow = 0.015 + Math.random()*0.02;
-    if(loadShieldDays > 0){
-      loadGrow = Math.max(0, loadGrow - 0.04);
-      loadShieldDays--;
-    }
-    load = Math.max(1.00, load + loadGrow);
-
-    // morale drift
-    morale -= 2.2 + (load-1)*2.0;
-    if(rep > 70) morale += 0.6;
-    if(complaints > 3) morale -= 1.5;
-
-    // random event
-    randomDayEvent();
-
-    // inspection
-    if(Math.random() < inspectionChance()){
-      if(hasInspectorFace && !faceUsed){
-        faceUsed = true;
-        hasInspectorFace = false;
-        rep += 3;
-        logLine("good","Проверка пришла. Ты включил «лицо инспектора». Они ушли довольные (пока).");
-        beep(720,0.06,"triangle",0.05);
-      } else {
-        complaints += 1;
-        cringe += 5;
-        morale -= 4;
-        logLine("bad","Проверка: ‘покажите акты’. Жалоба +1, кринж +5.");
-        beep(160,0.09,"sawtooth",0.05);
-      }
-    }
-
-    // new fires/poachers scale with load
-    const newF = Math.random() < clamp(0.18*load, 0.12, 0.55) ? 1 : 0;
-    const newP = Math.random() < clamp(0.12*load, 0.08, 0.45) ? 1 : 0;
-    fires += newF;
-    poach += newP;
-    if(newF) logLine("warn","Появилась новая термоточка. Карта стала краснее.");
-    if(newP) logLine("warn","Снова браконьеры. У них сезон всегда.");
-
-    // salary split (кринж-реализм)
-    if(day === 10){
-      const advance = 15680;
-      money += advance;
-      logLine("good", `Пришёл аванс: +${fmt(advance)} ₽. Ты сказал: “живём”.`);
-      beep(880,0.06,"triangle",0.06);
-    }
-    if(day === 25){
-      const rest = 52770;
-      money += rest;
-      logLine("good", `Пришла зарплата: +${fmt(rest)} ₽. И сразу расходы на жизнь: “держись”.`);
-      beep(990,0.06,"triangle",0.06);
+    if (type === 'mushroom') {
+        const m = new THREE.Group();
+        const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.22, 0.45, 10), new THREE.MeshStandardMaterial({ color: 0xf5eedc }));
+        stem.position.y = 0.22;
+        const cap = new THREE.Mesh(new THREE.SphereGeometry(0.44, 14, 12), new THREE.MeshStandardMaterial({ color: 0x7a4018 }));
+        cap.scale.y = 0.58; cap.position.y = 0.46;
+        m.add(stem, cap); grp.add(m);
+        harvestVisual = m;
+    } else if (type === 'berry') {
+        const bush = new THREE.Mesh(new THREE.SphereGeometry(0.65, 12, 10), new THREE.MeshStandardMaterial({ color: 0x2d6926 }));
+        bush.position.y = 0.45; grp.add(bush);
+        const berries = new THREE.Mesh(new THREE.SphereGeometry(0.68, 8, 8), new THREE.MeshStandardMaterial({ color: 0xe62232, wireframe: true }));
+        berries.position.y = 0.45; grp.add(berries);
+        harvestVisual = berries;
+    } else if (type === 'bark') {
+        const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.36, 0.48, 4.4, 12), new THREE.MeshStandardMaterial({ color: 0x594527 }));
+        trunk.position.y = 2.2;
+        const crown = new THREE.Mesh(new THREE.SphereGeometry(1.9, 12, 10), new THREE.MeshStandardMaterial({ color: 0x478255 }));
+        crown.position.y = 4.8;
+        const strip = new THREE.Mesh(new THREE.CylinderGeometry(0.44, 0.48, 1.3, 12, 1, false, -0.9, 1.8), new THREE.MeshStandardMaterial({ color: 0xdea949, side: THREE.DoubleSide }));
+        strip.position.y = 1.45;
+        grp.add(trunk, crown, strip);
+        harvestVisual = strip; // Снимается только кора!
+        treeColliders.push({ x, z, r: 0.65 });
+    } else if (type === 'chaga') {
+        const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.38, 5.2, 12), new THREE.MeshStandardMaterial({ map: birchTex }));
+        trunk.position.y = 2.6;
+        const crown = new THREE.Mesh(new THREE.SphereGeometry(1.9, 12, 10), new THREE.MeshStandardMaterial({ color: 0x6ba13b }));
+        crown.position.y = 5.6;
+        const chaga = new THREE.Mesh(new THREE.SphereGeometry(0.38, 10, 10), new THREE.MeshStandardMaterial({ color: 0x1f1815 }));
+        chaga.position.set(0, 1.65, 0.34);
+        grp.add(trunk, crown, chaga);
+        harvestVisual = chaga; // Срубается только чага!
+        treeColliders.push({ x, z, r: 0.6 });
+    } else if (type === 'honey') {
+        const hive = new THREE.Mesh(new THREE.CylinderGeometry(0.45, 0.48, 1.2, 12), new THREE.MeshStandardMaterial({ color: 0x9c6932 }));
+        hive.position.y = 0.6;
+        const comb = new THREE.Mesh(new THREE.BoxGeometry(0.55, 0.35, 0.25), new THREE.MeshStandardMaterial({ color: 0xffb71c }));
+        comb.position.set(0, 0.75, 0.42);
+        grp.add(hive, comb);
+        harvestVisual = comb;
+    } else if (type === 'pillar') {
+        const post = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.24, 1.9, 10), new THREE.MeshStandardMaterial({ color: 0xdedede }));
+        post.position.y = 0.95;
+        const cap = new THREE.Mesh(new THREE.ConeGeometry(0.28, 0.35, 4), new THREE.MeshStandardMaterial({ color: 0xc9382c }));
+        cap.position.y = 2.05;
+        grp.add(post, cap);
+        harvestVisual = cap;
+    } else if (type === 'sick_tree') {
+        const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.34, 0.5, 4.0, 10), new THREE.MeshStandardMaterial({ color: 0x4a321e }));
+        trunk.position.y = 2.0;
+        const crown = new THREE.Mesh(new THREE.ConeGeometry(2.4, 5.5, 12), new THREE.MeshStandardMaterial({ color: 0x9c5a25 }));
+        crown.position.y = 4.8;
+        grp.add(trunk, crown);
+        harvestVisual = crown;
+        treeColliders.push({ x, z, r: 0.75 });
+    } else if (type === 'beaver_dam') {
+        const dam = new THREE.Mesh(new THREE.CylinderGeometry(0.45, 0.55, 2.4, 10), new THREE.MeshStandardMaterial({ color: 0x5c3d22 }));
+        dam.rotation.z = Math.PI / 2; dam.position.y = 0.45;
+        grp.add(dam);
+        harvestVisual = dam;
+    } else if (type === 'camera_trap') {
+        const post = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.18, 2.2, 8), new THREE.MeshStandardMaterial({ color: 0x4a321e }));
+        post.position.y = 1.1;
+        const camBox = new THREE.Mesh(new THREE.BoxGeometry(0.38, 0.48, 0.28), new THREE.MeshStandardMaterial({ color: 0x36593b }));
+        camBox.position.set(0, 1.45, 0.16);
+        grp.add(post, camBox);
+        harvestVisual = camBox;
+    } else if (type === 'salt_lick') {
+        const trough = new THREE.Mesh(new THREE.BoxGeometry(1.3, 0.55, 0.7), new THREE.MeshStandardMaterial({ color: 0x6e4726 }));
+        trough.position.y = 0.35;
+        const salt = new THREE.Mesh(new THREE.SphereGeometry(0.32, 10, 10), new THREE.MeshStandardMaterial({ color: 0xeaf4f7 }));
+        salt.position.y = 0.68;
+        grp.add(trough, salt);
+        harvestVisual = salt;
     }
 
-    // clamp + checks
-    morale = clamp(morale,0,100);
-    cringe = clamp(cringe,0,100);
-    rep = clamp(rep,0,100);
-    load = clamp(load, 1.00, 3.00);
+    const beacon = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.12, 0.12, 18, 8),
+        new THREE.MeshBasicMaterial({ color: 0x7aff7a, transparent: true, opacity: 0.55 })
+    );
+    beacon.position.y = 9;
+    beacon.visible = false;
+    grp.add(beacon);
 
-    // achievements
-    if(day === 7){ achievements++; logLine("good","Достижение: «Неделя на участке». Ты ещё не бумага."); }
-    if(fires >= 5){ logLine("bad","На участке пожарно-бумажный апокалипсис. Снизь нагрузку!"); }
-    if(complaints === 0 && day >= 8){ achievements++; logLine("good","Достижение: «Без жалоб» (редкость)."); }
+    grp.position.set(x, y, z);
+    scene.add(grp);
 
-    day++;
-    update();
+    grp.userData = {
+        type: type,
+        name: name,
+        sub: sub,
+        active: true,
+        respawnTimer: 0,
+        beacon: beacon,
+        harvestMesh: harvestVisual
+    };
+    interactables.push(grp);
+}
+spawnAllWorldInteractables();
 
-    if(money < -2000) return gameOver("Баланс ушёл в минус. Ты теперь «инициативный лесной энтузиаст».");
-    if(cringe >= 100) return gameOver("Кринж = 100. Тебя назначили отвечать за ‘улучшение отчётности’.");
-    if(morale <= 0) return gameOver("Мораль = 0. Ты ушёл в лес и стал легендой.");
-    if(day > 30){
-      if(morale >= 40 && cringe <= 70 && complaints <= 5){
-        return win("Ты дожил до конца месяца и не утонул в бумаге. Это победа.");
-      } else {
-        return gameOver("Месяц закончился. Ты выжил, но система победила. (как всегда)");
-      }
+// Дикий медведь-шатун в северо-западном секторе
+const bearGroup = new THREE.Group();
+const bearFurMat = new THREE.MeshStandardMaterial({ color: 0x3d2414, roughness: 0.9 });
+const bearTorso = new THREE.Mesh(new THREE.SphereGeometry(0.95, 16, 14), bearFurMat);
+bearTorso.scale.set(0.95, 0.88, 1.45); bearTorso.position.y = 1.05;
+const bearHead = new THREE.Mesh(new THREE.SphereGeometry(0.55, 14, 14), bearFurMat);
+bearHead.position.set(0, 1.38, 1.35);
+attachDetailedFace(bearHead, bearFurMat, false);
+bearGroup.add(bearTorso, bearHead);
+bearGroup.position.set(-65, getTerrainHeight(-65, -65), -65);
+scene.add(bearGroup);
+let bearAngle = 0;
+let bearDamageCooldown = 0;
+
+// ==========================================
+// 6. КАРТА МИРА С ТУМАНОМ ВОЙНЫ НА КЛАВИШУ M (КАК В WOW)
+// ==========================================
+const FOG_GRID = 64;
+const fogData = new Uint8Array(FOG_GRID * FOG_GRID); // 0 = туман, 1 = открыто
+
+function updateFogOfWar() {
+    const px = playerGroup.position.x;
+    const pz = playerGroup.position.z;
+    const revealRadius = state.charClass === 'taxator' ? 58 : 42;
+
+    for (let gy = 0; gy < FOG_GRID; gy++) {
+        for (let gx = 0; gx < FOG_GRID; gx++) {
+            if (fogData[gy * FOG_GRID + gx] === 1) continue;
+            const wx = ((gx + 0.5) / FOG_GRID - 0.5) * WORLD_SIZE;
+            const wz = ((gy + 0.5) / FOG_GRID - 0.5) * WORLD_SIZE;
+            if (Math.hypot(px - wx, pz - wz) <= revealRadius) {
+                fogData[gy * FOG_GRID + gx] = 1;
+            }
+        }
     }
-  }
+}
 
-  // ----- SHOP -----
-  function buy(cost, ok){
-    if(money < cost){
-      logLine("bad", `Не хватает денег: нужно ещё ${fmt(cost - money)} ₽.`);
-      beep(200,0.07,"sawtooth");
-      return false;
+function toggleWorldMap() {
+    if (!gameStarted) return;
+    const modal = document.getElementById('world-map-modal');
+    if (modal.style.display === 'flex') {
+        modal.style.display = 'none';
+    } else {
+        modal.style.display = 'flex';
+        renderBigWorldMap();
     }
-    money -= cost;
-    ok();
-    beep(620,0.06,"square");
-    update();
-    return true;
-  }
+}
 
-  el("buyFuel").addEventListener("click", () => buy(1500, () => {
-    loadShieldDays = Math.max(loadShieldDays, 5);
-    logLine("good","Канистра куплена. Нагрузка 5 дней растёт медленнее.");
-  }));
+function renderBigWorldMap() {
+    const canvas = document.getElementById('big-map-canvas');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
 
-  el("buyRadio").addEventListener("click", () => buy(2200, () => {
-    hasRadio = true;
-    logLine("good","Рация на связи. Патрули стали эффективнее.");
-  }));
+    // 1. Фон: Неисследованный старинный пергамент (Туман войны)
+    ctx.fillStyle = '#382e20';
+    ctx.fillRect(0, 0, W, H);
 
-  el("buyZen").addEventListener("click", () => buy(900, () => {
-    cringe = clamp(cringe - 15, 0, 100);
-    morale = clamp(morale + 6, 0, 100);
-    logLine("good","Полевой дзен: кринж -15, мораль +6.");
-  }));
+    // Сетка координат на пергаменте
+    ctx.strokeStyle = 'rgba(200, 175, 120, 0.12)';
+    for (let x = 0; x < W; x += 64) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+    for (let y = 0; y < H; y += 64) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
 
-  el("buyFolder").addEventListener("click", () => buy(1800, () => {
-    hasFolder = true;
-    logLine("good","Папка для актов куплена. Задачи ‘Акт’ выполняются быстрее и лучше.");
-  }));
+    // 2. Отрисовка открытых участков карты (Зелёные лесные зоны, дороги, река)
+    let exploredCount = 0;
+    const cellW = W / FOG_GRID;
+    const cellH = H / FOG_GRID;
 
-  el("buyFace").addEventListener("click", () => buy(3200, () => {
-    hasInspectorFace = true;
-    faceUsed = false;
-    logLine("good","«Лицо инспектора» готово. Один раз спасёт на проверке.");
-  }));
+    for (let gy = 0; gy < FOG_GRID; gy++) {
+        for (let gx = 0; gx < FOG_GRID; gx++) {
+            if (fogData[gy * FOG_GRID + gx] === 1) {
+                exploredCount++;
+                const cx = (gx + 0.5) * cellW;
+                const cy = (gy + 0.5) * cellH;
+                ctx.fillStyle = (gx + gy) % 2 === 0 ? '#2d4f28' : '#32572c';
+                ctx.beginPath();
+                ctx.arc(cx, cy, cellW * 1.45, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+    }
 
-  // ----- BUTTONS -----
-  el("patrol").addEventListener("click", patrol);
-  el("writeAct").addEventListener("click", writeAct);
-  el("closeFire").addEventListener("click", closeFire);
-  el("callWeekend").addEventListener("click", callWeekend);
-  el("askRaise").addEventListener("click", askRaise);
-  el("endDay").addEventListener("click", endDay);
+    // 3. Отображаем открытые объекты и текущую цель квеста
+    const curQ = QUEST_LIST[state.currentQuestIndex];
+    const targetType = state.questNeedsTurnIn ? 'npc_kuzmich' : (curQ ? curQ.targetType : null);
 
-  el("reset").addEventListener("click", () => {
-    day = 1; money = 68000; load = 1.00; morale = 75; cringe = 12;
-    fires = 0; poach = 0; complaints = 0; rep = 50;
-    achievements = 0;
-    loadShieldDays = 0; hasRadio = false; hasFolder = false;
-    hasInspectorFace = false; faceUsed = false;
-    task = {active:false, name:"", seconds:0, left:0, kind:""};
-    if(taskTimer){ clearInterval(taskTimer); taskTimer = null; }
-    ui.log.innerHTML = "";
-    disableAll(false);
-    logLine("info","Новый месяц. Новые термоточки. Старый оклад.");
-    logLine("warn","Цель: выжить, закрывать термоточки и не утонуть в жалобах.");
-    update();
-    beep(520,0.06,"triangle");
-  });
+    interactables.forEach(obj => {
+        const gx = Math.floor(((obj.position.x / WORLD_SIZE) + 0.5) * FOG_GRID);
+        const gy = Math.floor(((obj.position.z / WORLD_SIZE) + 0.5) * FOG_GRID);
+        const isRevealed = fogData[Math.max(0, Math.min(FOG_GRID - 1, gy)) * FOG_GRID + Math.max(0, Math.min(FOG_GRID - 1, gx))] === 1;
 
-  el("mute").addEventListener("click", () => {
-    muted = !muted;
-    el("mute").textContent = muted ? "🔇 Звук: ВЫКЛ" : "🔊 Звук: ВКЛ";
-    logLine("info", muted ? "Звук выключен. Теперь слышно только ветер и отчёты." : "Звук включен. Теперь кринж ещё и звучит.");
-    update();
-  });
+        const mx = ((obj.position.x / WORLD_SIZE) + 0.5) * W;
+        const my = ((obj.position.z / WORLD_SIZE) + 0.5) * H;
 
-  window.addEventListener("keydown", (e) => {
-    if(e.code === "Space"){ e.preventDefault(); if(!el("endDay").disabled) endDay(); }
-    if(e.key.toLowerCase() === "r"){ if(!el("askRaise").disabled) askRaise(); }
-  });
+        if (obj.userData.type === targetType && obj.userData.active !== false) {
+            // Желтый маркер квестовой цели (виден как ориентир)
+            ctx.fillStyle = '#ffd84d';
+            ctx.beginPath(); ctx.arc(mx, my, 5.5, 0, Math.PI * 2); ctx.fill();
+            ctx.strokeStyle = '#000'; ctx.stroke();
+        } else if (isRevealed && obj.userData.active !== false) {
+            ctx.fillStyle = '#75e07d';
+            ctx.fillRect(mx - 2, my - 2, 4, 4);
+        }
+    });
 
-  // init
-  logLine("info","Ты вышел на участок. Рации молчат. Карта пока чистая.");
-  logLine("warn","Сезон начинается. Оклад — нет.");
-  update();
-})();
+    // Подпись Кордона в центре
+    ctx.fillStyle = '#fff3c4';
+    ctx.font = 'bold 12px Segoe UI';
+    ctx.fillText('🏠 КОРДОН №4', W / 2 - 42, H / 2 - 12);
+
+    // 4. Маркер самого игрока
+    const px = ((playerGroup.position.x / WORLD_SIZE) + 0.5) * W;
+    const py = ((playerGroup.position.z / WORLD_SIZE) + 0.5) * H;
+    ctx.save();
+    ctx.translate(px, py);
+    ctx.rotate(-playerGroup.rotation.y + Math.PI);
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath();
+    ctx.moveTo(0, -8); ctx.lineTo(6, 6); ctx.lineTo(-6, 6); ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+
+    const pct = Math.min(100, Math.round((exploredCount / (FOG_GRID * FOG_GRID)) * 100));
+    document.getElementById('map-explored-pct').innerText = `Исследовано территории Тайги: ${pct}%`;
+}
+
+// ==========================================
+// 7. СИСТЕМА МАУНТОВ И ГАРАЖА ПЕТРОВИЧА
+// ==========================================
+function toggleShopModal() {
+    if (!gameStarted) return;
+    const modal = document.getElementById('shop-modal');
+    if (modal.style.display === 'block') {
+        modal.style.display = 'none';
+    } else {
+        renderShopCards();
+        modal.style.display = 'block';
+    }
+}
+
+function renderShopCards() {
+    document.getElementById('shop-coins').innerText = state.coins;
+    const container = document.getElementById('mount-cards-container');
+    container.innerHTML = '';
+
+    ['monowheel', 'atv', 'uaz', 'heli'].forEach(mKey => {
+        const m = MOUNTS[mKey];
+        const owned = state.ownedMounts.includes(mKey);
+        const isEquipped = state.equippedMount === mKey;
+        const canBuy = state.level >= m.reqLvl && state.coins >= m.price;
+
+        const card = document.createElement('div');
+        card.className = 'mount-card' + (isEquipped ? ' active-mount' : '');
+
+        let btnHtml = '';
+        if (owned) {
+            btnHtml = `<button class="btn-mount" onclick="equipAndRideMount('${mKey}')">${isEquipped && state.activeMount === mKey ? 'Вы уже в седле' : 'Выбрать и оседлать [Z]'}</button>`;
+        } else {
+            btnHtml = `<button class="btn-mount" ${canBuy ? '' : 'disabled'} onclick="buyMount('${mKey}')">Купить за 🪙 ${m.price} (Ур. ${m.reqLvl})</button>`;
+        }
+
+        card.innerHTML = `
+            <div>
+                <div class="mc-top">
+                    <span class="mc-icon">${m.icon}</span>
+                    <div>
+                        <div class="mc-name">${m.name}</div>
+                        <div class="mc-req">Требуется: Уровень ${m.reqLvl} • Скорость: x${m.speedMult}</div>
+                    </div>
+                </div>
+                <div class="mc-desc">${m.desc}</div>
+            </div>
+            ${btnHtml}
+        `;
+        container.appendChild(card);
+    });
+}
+
+function buyMount(mKey) {
+    const m = MOUNTS[mKey];
+    if (state.level < m.reqLvl || state.coins < m.price) return;
+    state.coins -= m.price;
+    state.ownedMounts.push(mKey);
+    addLog(`🎉 Приобретён транспорт: ${m.name}! Нажмите [Z] для вызова.`, "log-quest");
+    equipAndRideMount(mKey);
+    renderShopCards();
+    updateUI();
+}
+
+function equipAndRideMount(mKey) {
+    state.equippedMount = mKey;
+    setMountActive(mKey);
+    renderShopCards();
+}
+
+function toggleMount() {
+    if (!gameStarted) return;
+    if (state.equippedMount === 'none') {
+        addLog("У вас ещё не выбран транспорт! Откройте Гараж Петровича [B].", "log-warn");
+        toggleShopModal();
+        return;
+    }
+    if (state.activeMount === 'none') {
+        setMountActive(state.equippedMount);
+    } else {
+        setMountActive('none');
+    }
+}
+
+function setMountActive(mKey) {
+    state.activeMount = mKey;
+    mountVisualsGroup.children.forEach(ch => {
+        ch.visible = (ch.userData.mountId === mKey);
+    });
+    if (mKey === 'none') {
+        humanModel.position.y = 0;
+        humanModel.visible = true;
+        addLog("Вы спешились.", "log-msg");
+    } else {
+        const m = MOUNTS[mKey];
+        humanModel.visible = (mKey === 'monowheel' || mKey === 'atv');
+        humanModel.position.y = mKey === 'monowheel' ? 0.28 : (mKey === 'atv' ? 0.55 : 0);
+        addLog(`${m.icon} Вы оседлали: ${m.name}!`, "log-loot");
+    }
+    updateUI();
+}
+
+// ==========================================
+// 8. ВЫПОЛНЕНИЕ 100 КВЕСТОВ И ВЗАИМОДЕЙСТВИЕ
+// ==========================================
+function interactWithSelected() {
+    if (!selectedObject || !gameStarted) return;
+    const dist = Math.hypot(playerGroup.position.x - selectedObject.position.x, playerGroup.position.z - selectedObject.position.z);
+    if (dist > 8.5) {
+        addLog("Подойдите или подъедьте чуть ближе к объекту!", "log-warn");
+        return;
+    }
+
+    const data = selectedObject.userData;
+    const curQ = QUEST_LIST[state.currentQuestIndex];
+
+    // 1. Механик Петрович
+    if (data.type === 'npc_mechanic') {
+        if (curQ && curQ.targetType === 'npc_mechanic' && !state.questNeedsTurnIn) {
+            advanceObjective('npc_mechanic');
+        } else {
+            toggleShopModal();
+        }
+        return;
+    }
+
+    // 2. Старший егерь Кузьмич
+    if (data.type === 'npc_kuzmich') {
+        if (curQ && curQ.targetType === 'npc_kuzmich' && !state.questNeedsTurnIn) {
+            state.questProgress = 1;
+            state.questNeedsTurnIn = true;
+        }
+        openQuestDialog();
+        return;
+    }
+
+    // 3. Шашечный столик Потапыча
+    if (data.type === 'checker_table') {
+        addLog("🐻 Вы разыграли блестящую партию в шашки с медведем Потапычем!", "log-quest");
+        advanceObjective('checker_table');
+        return;
+    }
+
+    // 4. Костровище
+    if (data.type === 'campfire') {
+        state.inventory.balm += 1;
+        addLog("🧪 Вы сварили на костре Целебный таёжный бальзам!", "log-loot");
+        advanceObjective('campfire');
+        updateUI();
+        return;
+    }
+
+    // 5. Любые лесные объекты и ресурсы (деревья не исчезают, скрывается только harvestMesh!)
+    if (data.active) {
+        let amt = 1 + (state.bonusHerb > 0 ? 1 : 0);
+        if (state.inventory[data.type] !== undefined) {
+            state.inventory[data.type] += amt;
+        }
+        addXp(18);
+        addLog(`Выполнено действие: ${data.name} (+18 опыта)`, "log-loot");
+
+        advanceObjective(data.type);
+
+        data.active = false;
+        data.respawnTimer = 22;
+        if (data.harvestMesh) data.harvestMesh.visible = false;
+        if (data.beacon) data.beacon.visible = false;
+        selectObject(null);
+        updateUI();
+    }
+}
+
+function advanceObjective(typeTriggered) {
+    const curQ = QUEST_LIST[state.currentQuestIndex];
+    if (!curQ || state.questNeedsTurnIn) return;
+
+    if (curQ.targetType === typeTriggered) {
+        state.questProgress++;
+        if (state.questProgress >= curQ.req) {
+            state.questNeedsTurnIn = true;
+            openQuestDialog(); // Сразу открываем рапорт по рации Кузьмичу, чтобы не бежать через всю карту 100 раз!
+        }
+        updateUI();
+    }
+}
+
+function openQuestDialog() {
+    const curQ = QUEST_LIST[state.currentQuestIndex];
+    if (!curQ) return;
+    const modal = document.getElementById('dialog-modal');
+    const btn = document.getElementById('dlg-accept-btn');
+
+    document.getElementById('dlg-npc-name').innerText = `Кузьмич (Рация Кордона • Квест #${state.currentQuestIndex + 1})`;
+    if (state.questNeedsTurnIn) {
+        document.getElementById('dlg-text').innerText = curQ.dlg;
+        btn.style.display = 'inline-block';
+        btn.innerText = `Получить награду (+${curQ.xp} XP, 🪙 ${Math.round(curQ.coins * state.coinBonus)})`;
+    } else {
+        document.getElementById('dlg-text').innerText = `Текущее поручение: «${curQ.title}».\n${curQ.desc}\nВыполнено: ${state.questProgress} из ${curQ.req}. Жёлтая стрелка над головой указывает направление!`;
+        btn.style.display = 'none';
+    }
+    modal.style.display = 'block';
+}
+
+function closeDialog() {
+    document.getElementById('dialog-modal').style.display = 'none';
+}
+
+function completeOrAdvanceQuest() {
+    closeDialog();
+    const curQ = QUEST_LIST[state.currentQuestIndex];
+    if (!curQ || !state.questNeedsTurnIn) return;
+
+    const earnedCoins = Math.round(curQ.coins * state.coinBonus);
+    state.coins += earnedCoins;
+    addXp(curQ.xp);
+    addLog(`✅ Квест #${state.currentQuestIndex + 1} завершён! Получено: 🪙 ${earnedCoins} шишек и ${curQ.xp} опыта.`, "log-quest");
+
+    if (state.currentQuestIndex < QUEST_LIST.length - 1) {
+        state.currentQuestIndex++;
+        state.questProgress = 0;
+        state.questNeedsTurnIn = false;
+        const nextQ = QUEST_LIST[state.currentQuestIndex];
+        addLog(`📜 Новое поручение (#${state.currentQuestIndex + 1}/100): «${nextQ.title}»`, "log-quest");
+    } else {
+        addLog("🏆 Вы прошли все 100 поручений Хранителей Тайги! Почёт и уважение!", "log-quest");
+    }
+    updateUI();
+}
+
+// ==========================================
+// 9. СПОСОБНОСТИ И ОБНОВЛЕНИЕ ИНТЕРФЕЙСА
+// ==========================================
+function useSkill(num) {
+    if (state.cooldowns[num] > 0) return;
+
+    if (num === 1) {
+        state.cooldowns[1] = 10;
+        state.buffs.senseTimer = 8;
+        const curQ = QUEST_LIST[state.currentQuestIndex];
+        interactables.forEach(obj => {
+            if (obj.userData.beacon && obj.userData.active) {
+                const isQuestTarget = curQ && obj.userData.type === curQ.targetType;
+                const d = Math.hypot(playerGroup.position.x - obj.position.x, playerGroup.position.z - obj.position.z);
+                if (d <= state.senseRange || isQuestTarget) {
+                    obj.userData.beacon.visible = true;
+                }
+            }
+        });
+        addLog("🧭 Таксация: все нужные по квесту объекты подсвечены лучами!", "log-quest");
+    } else if (num === 2) {
+        if (state.hp >= state.maxHp) { addLog("Здоровье уже полное!", "log-msg"); return; }
+        if (state.inventory.balm > 0) {
+            state.inventory.balm--; state.hp = Math.min(state.maxHp, state.hp + 75);
+            addLog("🧪 Вы выпили бальзам (+75 Здоровья)!", "log-loot");
+        } else if (state.inventory.berry > 0) {
+            state.inventory.berry--; state.hp = Math.min(state.maxHp, state.hp + 40);
+            addLog("🍒 Вы съели горсть брусники (+40 Здоровья)!", "log-loot");
+        } else {
+            addLog("Нет бальзама или ягод в рюкзаке!", "log-warn"); return;
+        }
+        state.cooldowns[2] = 6;
+        updateUI();
+    } else if (num === 3) {
+        state.cooldowns[3] = 10;
+        state.buffs.sprintTimer = 6;
+        addLog("🥾 Таёжный рывок: скорость увеличена!", "log-loot");
+    }
+}
+
+function addXp(amount) {
+    state.xp += amount;
+    while (state.xp >= state.xpNext) {
+        state.xp -= state.xpNext;
+        state.level++;
+        state.xpNext = Math.round(state.xpNext * 1.25);
+        state.maxHp += 20;
+        state.hp = state.maxHp;
+        addLog(`🎉 НОВЫЙ УРОВЕНЬ: ${state.level}! Проверьте новые маунты в Гараже [B]!`, "log-quest");
+    }
+    updateUI();
+}
+
+function addLog(text, cls = "log-msg") {
+    const box = document.getElementById('event-log');
+    const div = document.createElement('div');
+    div.className = cls;
+    div.innerText = "• " + text;
+    box.appendChild(div);
+    box.scrollTop = box.scrollHeight;
+}
+
+function updateUI() {
+    const classTitle = state.charClass === 'taxator' ? 'Таксатор' : (state.charClass === 'herbalist' ? 'Травник' : 'Следопыт');
+    document.getElementById('hud-name').innerText = state.name;
+    document.getElementById('hud-lvl').innerText = `Ур. ${state.level} • ${classTitle}`;
+    document.getElementById('hud-coins').innerText = state.coins;
+
+    const m = MOUNTS[state.activeMount];
+    document.getElementById('hud-mount-name').innerText = `${m.icon} ${m.name} [Z]`;
+    document.getElementById('bar-mount-icon').innerText = MOUNTS[state.equippedMount].icon;
+
+    document.getElementById('hp-fill').style.width = `${(state.hp / state.maxHp) * 100}%`;
+    document.getElementById('hp-text').innerText = `Здоровье: ${Math.round(state.hp)} / ${state.maxHp}`;
+
+    // Нижняя шкала опыта в стиле WoW
+    const xpPct = Math.min(100, Math.round((state.xp / state.xpNext) * 100));
+    document.getElementById('wow-xp-fill').style.width = `${xpPct}%`;
+    document.getElementById('wow-xp-text').innerText = `Уровень ${state.level} • Опыт: ${state.xp} / ${state.xpNext} (${xpPct}%) • Золотые шишки: ${state.coins}`;
+
+    // Инвентарь
+    ['mushroom', 'berry', 'bark', 'chaga', 'honey', 'balm'].forEach(k => {
+        document.getElementById(`cnt-${k}`).innerText = state.inventory[k];
+    });
+    const total = Object.values(state.inventory).reduce((a, b) => a + b, 0);
+    document.getElementById('inv-total').innerText = `Предметов: ${total}`;
+
+    // Квест-трекер (100 квестов)
+    const curQ = QUEST_LIST[state.currentQuestIndex];
+    if (curQ) {
+        document.getElementById('quest-counter').innerText = `Квест ${state.currentQuestIndex + 1} из 100`;
+        document.getElementById('quest-cat').innerText = curQ.cat;
+        document.getElementById('quest-title').innerText = curQ.title;
+        document.getElementById('quest-desc').innerText = curQ.desc;
+        document.getElementById('quest-obj').innerText = state.questNeedsTurnIn
+            ? "Задача выполнена! Нажмите [F] у Кузьмича или примите награду."
+            : `Прогресс: ${state.questProgress} / ${curQ.req}`;
+        document.getElementById('quest-reward').innerText = `Награда: +${curQ.xp} Опыта, 🪙 ${Math.round(curQ.coins * state.coinBonus)} шишек`;
+    }
+}
+
+// ==========================================
+// 10. УПРАВЛЕНИЕ, ПРЫЖОК БЕЗ ДЁРГАНИЯ И ГЛАВНЫЙ ЦИКЛ
+// ==========================================
+const keys = {};
+let camYaw = 0;
+let camPitch = 0.35;
+let camDist = 12.0;
+let isRightMouseDown = false;
+let velY = 0;
+let isGrounded = true;
+
+window.addEventListener('keydown', (e) => {
+    keys[e.code] = true;
+    if (!gameStarted) return;
+    if (e.code === 'KeyF' || e.code === 'KeyE') interactWithSelected();
+    if (e.code === 'KeyM') toggleWorldMap();
+    if (e.code === 'KeyB') toggleShopModal();
+    if (e.code === 'KeyZ') toggleMount();
+    if (e.code === 'Digit1') useSkill(1);
+    if (e.code === 'Digit2') useSkill(2);
+    if (e.code === 'Digit3') useSkill(3);
+    if (e.code === 'Space' && isGrounded && state.activeMount !== 'heli') {
+        velY = 8.8;
+        isGrounded = false;
+    }
+});
+window.addEventListener('keyup', (e) => keys[e.code] = false);
+window.addEventListener('contextmenu', (e) => e.preventDefault());
+
+window.addEventListener('mousedown', (e) => {
+    if (!gameStarted) return;
+    if (e.button === 2) isRightMouseDown = true;
+    if (e.button === 0 && e.target === renderer.domElement) handleWorldClick(e);
+});
+window.addEventListener('mouseup', (e) => { if (e.button === 2) isRightMouseDown = false; });
+window.addEventListener('mousemove', (e) => {
+    if (isRightMouseDown && gameStarted) {
+        camYaw -= e.movementX * 0.0055;
+        camPitch = Math.max(0.06, Math.min(1.38, camPitch + e.movementY * 0.0055));
+    }
+});
+window.addEventListener('wheel', (e) => {
+    if (!gameStarted) return;
+    camDist = Math.max(5, Math.min(28, camDist + e.deltaY * 0.012));
+});
+
+const raycaster = new THREE.Raycaster();
+const mouseVec = new THREE.Vector2();
+
+function handleWorldClick(e) {
+    mouseVec.x = (e.clientX / window.innerWidth) * 2 - 1;
+    mouseVec.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    raycaster.setFromCamera(mouseVec, camera);
+
+    const hits = raycaster.intersectObjects(interactables, true);
+    if (hits.length > 0) {
+        let obj = hits[0].object;
+        while (obj.parent && !interactables.includes(obj)) obj = obj.parent;
+        if (interactables.includes(obj)) {
+            selectObject(obj);
+            const dist = Math.hypot(playerGroup.position.x - obj.position.x, playerGroup.position.z - obj.position.z);
+            if (dist <= 8.5) interactWithSelected();
+        }
+    }
+}
+
+function selectObject(obj) {
+    selectedObject = obj;
+    const tf = document.getElementById('target-frame');
+    if (!obj) {
+        tf.style.display = 'none';
+        targetRing.visible = false;
+        return;
+    }
+    tf.style.display = 'block';
+    document.getElementById('target-name').innerText = obj.userData.name;
+    targetRing.visible = true;
+    targetRing.position.set(obj.position.x, obj.position.y + 0.1, obj.position.z);
+}
+
+const mapCanvas = document.getElementById('minimap');
+const mapCtx = mapCanvas.getContext('2d');
+
+function drawMinimap() {
+    mapCtx.clearRect(0, 0, 164, 164);
+    const cx = 82, cy = 82, scale = 0.65;
+    const curQ = QUEST_LIST[state.currentQuestIndex];
+    const targetType = state.questNeedsTurnIn ? 'npc_kuzmich' : (curQ ? curQ.targetType : null);
+
+    let closestTarget = null;
+    let closestDist = 9999;
+
+    interactables.forEach(obj => {
+        if (obj.userData.active === false) return;
+        const d = Math.hypot(obj.position.x - playerGroup.position.x, obj.position.z - playerGroup.position.z);
+        if (obj.userData.type === targetType && d < closestDist) {
+            closestDist = d;
+            closestTarget = obj;
+        }
+
+        const dx = (obj.position.x - playerGroup.position.x) * scale;
+        const dz = (obj.position.z - playerGroup.position.z) * scale;
+        if (Math.hypot(dx, dz) > 76) return;
+
+        if (obj.userData.type === targetType) {
+            mapCtx.fillStyle = "#ffd84d";
+            mapCtx.beginPath(); mapCtx.arc(cx + dx, cy + dz, 4.2, 0, Math.PI * 2); mapCtx.fill();
+        } else {
+            mapCtx.fillStyle = "#62d96b";
+            mapCtx.fillRect(cx + dx - 1.5, cy + dz - 1.5, 3, 3);
+        }
+    });
+
+    // Направляем 3D-стрелку над героем на ближайшую цель текущего квеста
+    if (closestTarget) {
+        questArrow.visible = true;
+        const ang = Math.atan2(closestTarget.position.x - playerGroup.position.x, closestTarget.position.z - playerGroup.position.z);
+        questArrow.rotation.y = ang - playerGroup.rotation.y;
+    } else {
+        questArrow.visible = false;
+    }
+
+    // Игрок в центре радара
+    mapCtx.save();
+    mapCtx.translate(cx, cy);
+    mapCtx.rotate(-playerGroup.rotation.y + Math.PI);
+    mapCtx.fillStyle = "#ffffff";
+    mapCtx.beginPath();
+    mapCtx.moveTo(0, -6); mapCtx.lineTo(4.5, 5); mapCtx.lineTo(-4.5, 5); mapCtx.closePath();
+    mapCtx.fill();
+    mapCtx.restore();
+}
+
+function startGame() {
+    state.name = document.getElementById('inp-name').value.trim() || "Лесничий";
+    state.charClass = document.getElementById('inp-class').value;
+
+    if (state.charClass === 'taxator') state.senseRange = 80;
+    if (state.charClass === 'herbalist') { state.bonusHerb = 1; state.coinBonus = 1.2; }
+    if (state.charClass === 'ranger') { state.maxHp = 135; state.hp = 135; state.speedMultiplier = 1.2; }
+
+    document.getElementById('char-creation').style.display = 'none';
+    document.getElementById('hud').style.display = 'block';
+    gameStarted = true;
+
+    updateFogOfWar();
+    selectObject(interactables.find(o => o.userData.type === 'npc_kuzmich'));
+    updateUI();
+}
+
+const clock = new THREE.Clock();
+
+function animate() {
+    requestAnimationFrame(animate);
+    const dt = Math.min(0.1, clock.getDelta());
+    const elapsed = clock.getElapsedTime();
+
+    if (!gameStarted) {
+        // В меню создания персонажа камера крупно показывает лицо с глазами, носом и ртом
+        playerGroup.rotation.y = Math.sin(elapsed * 0.7) * 0.45;
+        camera.position.set(-1.1, 2.05, 13.2);
+        camera.lookAt(-0.4, 1.85, 10);
+        renderer.render(scene, camera);
+        return;
+    }
+
+    // 1. Таймеры скиллов
+    for (let k = 1; k <= 3; k++) {
+        const cdEl = document.getElementById(`cd-${k}`);
+        if (state.cooldowns[k] > 0) {
+            state.cooldowns[k] = Math.max(0, state.cooldowns[k] - dt);
+            cdEl.style.display = 'flex';
+            cdEl.innerText = Math.ceil(state.cooldowns[k]);
+        } else {
+            cdEl.style.display = 'none';
+        }
+    }
+    if (state.buffs.senseTimer > 0) {
+        state.buffs.senseTimer -= dt;
+        if (state.buffs.senseTimer <= 0) {
+            interactables.forEach(o => { if (o.userData.beacon) o.userData.beacon.visible = false; });
+        }
+    }
+    if (state.buffs.sprintTimer > 0) state.buffs.sprintTimer -= dt;
+
+    // 2. Передвижение (Пешком или на Маунтах + Вертолёт)
+    let moveForward = 0, moveRight = 0;
+    if (keys['KeyW'] || keys['ArrowUp']) moveForward += 1;
+    if (keys['KeyS'] || keys['ArrowDown']) moveForward -= 1;
+    if (keys['KeyD'] || keys['ArrowRight']) moveRight += 1;
+    if (keys['KeyA'] || keys['ArrowLeft']) moveRight -= 1;
+
+    const isMoving = moveForward !== 0 || moveRight !== 0;
+    const mountObj = MOUNTS[state.activeMount];
+    const speed = 7.6 * state.speedMultiplier * mountObj.speedMult * (state.buffs.sprintTimer > 0 ? 1.45 : 1.0);
+
+    if (isMoving) {
+        const moveAngle = camYaw + Math.atan2(-moveRight, moveForward);
+        const nx = playerGroup.position.x - Math.sin(moveAngle) * speed * dt;
+        const nz = playerGroup.position.z - Math.cos(moveAngle) * speed * dt;
+
+        let blocked = false;
+        if (!mountObj.fly) {
+            for (const col of treeColliders) {
+                if (Math.hypot(nx - col.x, nz - col.z) < col.r) { blocked = true; break; }
+            }
+        }
+        const limit = WORLD_SIZE * 0.48;
+        if (!blocked && Math.abs(nx) < limit && Math.abs(nz) < limit) {
+            playerGroup.position.x = nx;
+            playerGroup.position.z = nz;
+            updateFogOfWar();
+        }
+        playerGroup.rotation.y = moveAngle + Math.PI;
+    }
+
+    // ЕСТЕСТВЕННАЯ АНИМАЦИЯ КОНЕЧНОСТЕЙ (Без дёргания в прыжке и на маунте!)
+    if (state.activeMount !== 'none') {
+        // Спокойная посадка на транспорте
+        leftLeg.rotation.x = 0.15; rightLeg.rotation.x = -0.15;
+        leftArm.rotation.x = -0.35; rightArm.rotation.x = -0.35;
+    } else if (!isGrounded) {
+        // В ПРЫЖКЕ: Фиксированная собранная поза без дёргания руками и ногами!
+        leftLeg.rotation.x = 0.28;
+        rightLeg.rotation.x = -0.22;
+        leftArm.rotation.x = -0.45;
+        rightArm.rotation.x = -0.45;
+    } else if (isMoving) {
+        // Плавный бег по земле
+        const swing = Math.sin(elapsed * 11.5) * 0.56;
+        leftLeg.rotation.x = swing;
+        rightLeg.rotation.x = -swing;
+        leftArm.rotation.x = -swing * 0.72;
+        rightArm.rotation.x = swing * 0.72;
+    } else {
+        // Покой
+        leftLeg.rotation.x = 0; rightLeg.rotation.x = 0;
+        leftArm.rotation.x = 0; rightArm.rotation.x = 0;
+    }
+
+    // Вертикальная физика (Прыжок vs Полёт на вертолёте)
+    const groundY = getTerrainHeight(playerGroup.position.x, playerGroup.position.z);
+    if (mountObj.fly) {
+        if (heliRotorMesh) heliRotorMesh.rotation.y += 22 * dt;
+        if (keys['Space']) playerGroup.position.y = Math.min(groundY + 48, playerGroup.position.y + 14 * dt);
+        if (keys['KeyC'] || keys['ShiftLeft']) playerGroup.position.y = Math.max(groundY, playerGroup.position.y - 14 * dt);
+        if (playerGroup.position.y < groundY) playerGroup.position.y = groundY;
+        isGrounded = (playerGroup.position.y <= groundY + 0.1);
+    } else {
+        if (!isGrounded || playerGroup.position.y > groundY) {
+            playerGroup.position.y += velY * dt;
+            velY -= 22 * dt;
+            if (playerGroup.position.y <= groundY) {
+                playerGroup.position.y = groundY;
+                velY = 0;
+                isGrounded = true;
+            }
+        } else {
+            playerGroup.position.y = groundY;
+        }
+    }
+
+    // 3. Камера за спиной героя
+    const camX = playerGroup.position.x + Math.sin(camYaw) * Math.cos(camPitch) * camDist;
+    const camZ = playerGroup.position.z + Math.cos(camYaw) * Math.cos(camPitch) * camDist;
+    const camY = playerGroup.position.y + 2.0 + Math.sin(camPitch) * camDist;
+    camera.position.set(camX, Math.max(getTerrainHeight(camX, camZ) + 0.8, camY), camZ);
+    camera.lookAt(playerGroup.position.x, playerGroup.position.y + 1.8, playerGroup.position.z);
+
+    // 4. Анимация объектов мира и респавн
+    interactables.forEach(obj => {
+        if (obj.userData.exclaim) {
+            obj.userData.exclaim.rotation.y = elapsed * 1.8;
+        }
+        if (obj.userData.active === false) {
+            obj.userData.respawnTimer -= dt;
+            if (obj.userData.respawnTimer <= 0) {
+                obj.userData.active = true;
+                if (obj.userData.harvestMesh) obj.userData.harvestMesh.visible = true;
+            }
+        }
+    });
+
+    // 5. Патрулирование дикого медведя-шатуна
+    bearAngle += 0.4 * dt;
+    const bx = -65 + Math.cos(bearAngle) * 16;
+    const bz = -65 + Math.sin(bearAngle) * 16;
+    bearGroup.rotation.y = Math.atan2(bx - bearGroup.position.x, bz - bearGroup.position.z);
+    bearGroup.position.set(bx, getTerrainHeight(bx, bz), bz);
+
+    const distToBear = Math.hypot(playerGroup.position.x - bearGroup.position.x, playerGroup.position.z - bearGroup.position.z);
+    if (bearDamageCooldown > 0) bearDamageCooldown -= dt;
+    if (distToBear < 3.0 && playerGroup.position.y - bearGroup.position.y < 2.5 && bearDamageCooldown <= 0) {
+        bearDamageCooldown = 2.0;
+        state.hp = Math.max(0, state.hp - 20);
+        addLog("🐻 Шатун задел вас лапой (-20 Здоровья)!", "log-warn");
+        if (state.hp <= 0) {
+            state.hp = state.maxHp;
+            playerGroup.position.set(0, 0, 8);
+            addLog("Вы эвакуированы на Кордон №4.", "log-warn");
+        }
+        updateUI();
+    }
+
+    if (selectedObject) {
+        const d = Math.hypot(playerGroup.position.x - selectedObject.position.x, playerGroup.position.z - selectedObject.position.z);
+        document.getElementById('target-sub').innerText = `${selectedObject.userData.sub} • ${d.toFixed(1)} м`;
+    }
+
+    drawMinimap();
+    renderer.render(scene, camera);
+}
+
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+animate();
 </script>
 </body>
 </html>
